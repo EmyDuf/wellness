@@ -55,9 +55,20 @@ font = "sans serif"
 
 # -----------------------------------------------------------------------------
 #@st.cache_data
-def get_data_station():
+def get_data_wellness():
     # Instead of a CSV on disk, you could read from an HTTP endpoint here too.
     DATA_FILENAME = Path(__file__).parent/'data/csv_long/bien_etre.csv'
     df = pd.read_csv(DATA_DIR, sep=';', encoding='utf-8')
     df['Valeur_Mesurée'] = df['Valeur_Mesurée'].str.replace(",", ".", regex=False)  # replace decimal comma with dot
     df['Valeur_Mesurée'] = df['Valeur_Mesurée'].astype(float)
+
+    return df
+df_wellness = get_data_wellness()
+
+# Filter pays
+country = df_wellness['Pays'].unique()
+if not len(pays):
+    st.warning("Selectionner au moins un Pays")
+
+selected_country = st.sidebar.multiselect('Quel  souhaitez-vous regarder ?', country,  
+['France', 'Allemagne'])
