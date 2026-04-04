@@ -72,3 +72,9 @@ if not len(pays):
 
 selected_country = st.sidebar.multiselect('Quel  souhaitez-vous regarder ?', country,  
 ['France', 'Allemagne'])
+
+#st.title('Split steps of the story')
+tab0, tab1, tab2 = st.tabs([ "Bien-être", "PIB"])
+with tab0:
+    st.header('Bien-être', divider='gray')
+    st.caption("Bien-être :smile: ")
