@@ -62,21 +62,7 @@ Pour aider à la présentation des résultats sous forme de cartes, est mis à d
 Rappel du règlement : il est interdit de rajouter des données hormis des fonds de carte.
 
 # Fichiers et formats
-Les données sont fournies sous deux formats logiques :
- - long : chaque observation est sur plusieurs lignes, une par variable (identifiant, valeur) 
- - large : une observation est sur une ligne, avec autant de variables/valeurs que de colonnes
-
-Et sous deux formats physique :
- - xls/csv : le désavantage de csv est l'absence de typage des champs
- - parquet
-
-Vous avez le choix de la combinaison de formats. **Les 4 répertoires suivants contiennent les mêmes données** mais aux formats indiqués :
- - csv_large
- - xls_large
- - csv_long
- - parquet_long
-
-Chacun de ces répertoires contient les fichiers suivants, avec le suffixe correspondant à son format (csv, xls ou parquet)
+Chacun de ces répertoires contient les fichiers suivants
  - depenses_euro
  - depenses_france
  - bien_etre
