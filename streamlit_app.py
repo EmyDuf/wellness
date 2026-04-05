@@ -69,8 +69,8 @@ def get_data_depenses():
     # Instead of a CSV on disk, you could read from an HTTP endpoint here too.
     DATA_FILENAME = Path(__file__).parent/'data/df_depenses.csv'
     df = pd.read_csv(DATA_FILENAME, sep=';', encoding='utf-8')
-    #df['Valeur_Mesurée'] = df['Valeur_Mesurée'].str.replace(",", ".", regex=False)  # replace decimal comma with dot
-    #df['Valeur_Mesurée'] = df['Valeur_Mesurée'].astype(float)
+    df['value'] = df['value'].str.replace(",", ".", regex=False)  # replace decimal comma with dot
+    df['value'] = df['value'].astype(float)
 
     return df
 df_depenses = get_data_depenses()
@@ -161,7 +161,7 @@ with tab1:
     #filtered_df_depenses['variable'] = filtered_df_depenses['variable'].str.split('_').str[0]
     #filtered_df_depenses['variable'] = filtered_df_depenses['variable'].str.replace(' ','<br>')
 
-    fig2 = px.treemap(df_depenses.query("Année==2021 & value>0") ,
+    fig2 = px.treemap(df_depenses.query("Pays=='France & Année==2021 & value>0") ,
                     path=["Année",'Pays','variable'], #"Année==2012 | Année==2022 & 
                     values='value',color='variable', #title='Dépenses', #marker_colorscale = 'Blues'
                     )
