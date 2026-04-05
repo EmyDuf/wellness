@@ -145,8 +145,6 @@ with tab0:
 
     #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
     fig1.update_traces(mode="markers+lines")
-    fig1.show()
-
     st.plotly_chart(fig1)
 
 
@@ -158,11 +156,21 @@ with tab1:
     filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
     df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[False,False,False]).query("Année==2021 & value>0") 
 
-    
-    fig2 = px.line(
-        df3,
-        x="Année", #size= 'Valeur_Mesurée', #size_max=25,
-        y="value", color="Pays",height=500,width=800,
-        hover_name="Pays", #size_max=20,
+
+    fig3 = px.treemap(filtered_df_depenses ,
+                    path=["Année",'Pays','variable'], 
+                    values='value',color='variable', 
+                    #color_continuous_scale="Viridis",
+                    )
+
+    fig3.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
+    fig3.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
+    fig3.update_layout(margin = dict(t=30, l=5, r=5, b=5))
+    #fig3.show()
+    st.plotly_chart(fig3, use_container_width=True)
+
+    st.dataframe(
+        df_depenses,
+        use_container_width=True,
+        #column_config={"code_crue": st.column_config.TextColumn("code_crue")},
     )
-    st.plotly_chart(fig2)
