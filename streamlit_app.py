@@ -158,18 +158,11 @@ with tab1:
     filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
     df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[False,False,False]).query("Année==2021 & value>0") 
 
-    #filtered_df_depenses['variable'] = filtered_df_depenses['variable'].str.split('_').str[0]
-    #filtered_df_depenses['variable'] = filtered_df_depenses['variable'].str.replace(' ','<br>')
-
-    fig2 = px.treemap(df3 ,
-                    path=["Année",'Pays','variable'], #"Année==2012 | Année==2022 & 
-                    values='value',color='variable', #title='Dépenses', #marker_colorscale = 'Blues'
-                    )
-
-    fig2.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
-    fig2.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
-    fig2.update_layout(margin = dict(t=30, l=5, r=5, b=5))
-    fig2.show()
-
-    st.plotly_chart(fig2)
     
+    fig2 = px.line(
+        df3,
+        x="Année", #size= 'Valeur_Mesurée', #size_max=25,
+        y="value", color="Pays",height=500,width=800,
+        hover_name="Pays", #size_max=20,
+    )
+    st.plotly_chart(fig2)
