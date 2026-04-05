@@ -68,11 +68,11 @@ df_wellness = get_data_wellness()
 def get_data_depenses():
     # Instead of a CSV on disk, you could read from an HTTP endpoint here too.
     DATA_FILENAME = Path(__file__).parent/'data/df_depenses.csv'
-    df = pd.read_csv(DATA_FILENAME, sep=';', encoding='utf-8')
-    df['value'] = df['value'].str.replace(",", ".", regex=False)  # replace decimal comma with dot
-    df['value'] = df['value'].astype(float)
+    df_d = pd.read_csv(DATA_FILENAME, sep=';', encoding='utf-8')
+    #df_d['value'] = df_d['value'].str.replace(",", ".", regex=False)  # replace decimal comma with dot
+    df_d['value'] = df_d['value'].astype(float)
 
-    return df
+    return df_d
 df_depenses = get_data_depenses()
 
 # Filter année
@@ -155,13 +155,13 @@ with tab1:
     st.caption("Dépenses :money:")
     
     import plotly.express as px
-    #filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
-    #df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[False,False,False]).query("Année==2021 & value>0") 
+    filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
+    df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[False,False,False]).query("Année==2021 & value>0") 
 
     #filtered_df_depenses['variable'] = filtered_df_depenses['variable'].str.split('_').str[0]
     #filtered_df_depenses['variable'] = filtered_df_depenses['variable'].str.replace(' ','<br>')
 
-    fig2 = px.treemap(df_depenses.query("Pays=='France & Année==2021 & value>0") ,
+    fig2 = px.treemap(df3 ,
                     path=["Année",'Pays','variable'], #"Année==2012 | Année==2022 & 
                     values='value',color='variable', #title='Dépenses', #marker_colorscale = 'Blues'
                     )
