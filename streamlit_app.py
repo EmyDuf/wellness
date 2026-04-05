@@ -85,15 +85,15 @@ df_depenses = get_data_depenses()
 #    value=[min_value_debit, max_value_debit],max_value=max_value_debit)
 
 # Filter pays
-#country = df_wellness['Pays'].unique()
-#if not len(country):
-#    st.warning("Selectionner au moins un Pays")
+country = df_wellness['Pays'].unique()
+if not len(country):
+    st.warning("Selectionner au moins un Pays")
 
-selected_country = st.sidebar.multiselect('Quel  souhaitez-vous regarder ?', ['France', 'Allemagne'],
+selected_country = st.sidebar.multiselect('Quel  souhaitez-vous regarder ?', country,
+                                          default=['France', 'Allemagne'])
        #'Pays-Bas', 'Portugal', 'Luxembourg', 'Belgique',
        #'Autriche', 'Irlande', 'Finlande', 'Espagne', 'Lituanie',
        #'Italie', 'Lettonie', 'Estonie', 'République slovaque', 'Grèce'],
-    default=['France', 'Allemagne'])
 
 #st.title('Split steps of the story')
 tab0, tab1 = st.tabs([ "Bien-être", "PIB"])
@@ -153,20 +153,23 @@ with tab0:
 with tab1:
     st.header('Dépenses', divider='gray')
     st.caption("Dépenses :money:")
-
+    
+    import plotly.express as px
     filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
+    df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[False,False,False]).query("Année==2021 & value>0") 
 
     #filtered_df_depenses['variable'] = filtered_df_depenses['variable'].str.split('_').str[0]
     #filtered_df_depenses['variable'] = filtered_df_depenses['variable'].str.replace(' ','<br>')
 
-    fig2 = px.treemap(filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[False,False,False]).query("Année==2021 & value>0"), 
+    fig2 = px.treemap(df3,
                     path=["Année",'Pays','variable'], #"Année==2012 | Année==2022 & 
                     values='value',color='variable', #title='Dépenses', #marker_colorscale = 'Blues'
-                    )#labels = "label+value+percent parent+percent entry")
+                    )
 
-    fig2.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
+    #fig2.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
     #fig2.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
-    fig2.update_layout(margin = dict(t=30, l=5, r=5, b=5))
+    #fig2.update_layout(margin = dict(t=30, l=5, r=5, b=5))
     fig2.show()
+
     st.plotly_chart(fig2)
     
