@@ -155,13 +155,13 @@ with tab1:
     st.caption("Dépenses :money:")
     
     import plotly.express as px
-    filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
-    df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[False,False,False]).query("Année==2021 & value>0") 
+    #filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
+    #df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[False,False,False]).query("Année==2021 & value>0") 
 
     #filtered_df_depenses['variable'] = filtered_df_depenses['variable'].str.split('_').str[0]
     #filtered_df_depenses['variable'] = filtered_df_depenses['variable'].str.replace(' ','<br>')
 
-    fig2 = px.treemap(df3,
+    fig2 = px.treemap(df_depenses.query("Année==2021 & value>0") ,
                     path=["Année",'Pays','variable'], #"Année==2012 | Année==2022 & 
                     values='value',color='variable', #title='Dépenses', #marker_colorscale = 'Blues'
                     )
