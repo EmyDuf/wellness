@@ -166,9 +166,9 @@ with tab1:
                     values='value',color='variable', #title='Dépenses', #marker_colorscale = 'Blues'
                     )
 
-    #fig2.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
-    #fig2.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
-    #fig2.update_layout(margin = dict(t=30, l=5, r=5, b=5))
+    fig2.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
+    fig2.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
+    fig2.update_layout(margin = dict(t=30, l=5, r=5, b=5))
     fig2.show()
 
     st.plotly_chart(fig2)
