@@ -191,7 +191,7 @@ with tab2:
 
 with tab3:
     st.header('Bien-être Habitat', divider='gray')
-    st.caption("Bien-être habitat :smile: ")
+    st.caption("Bien-être de l'habitat en 2022 :smile: :house_with_garden: ")
 
     from PIL import Image
     import plotly.express as px
