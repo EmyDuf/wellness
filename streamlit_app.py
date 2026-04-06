@@ -240,7 +240,7 @@ with tab3:
     fig1.update_traces(mode="markers+lines")
     st.plotly_chart(fig1)
 
-    st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement")
+    #st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement")
     
     col1, col2, col3, col4 = st.columns(4)
     col1.write('Accessibilité financière du logement')
