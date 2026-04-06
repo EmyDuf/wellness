@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 # Declare some useful functions.
-import altair as alt
+#import altair as alt
 import streamlit as st
 import pandas as pd
 import math
@@ -10,17 +10,17 @@ from pathlib import Path
 import os
 os.system("pip install -r requirements.txt")
 import plotly.express as px
-from streamlit_player import st_player
+#from streamlit_player import st_player
 import geopandas as gpd
 #from ipyleaflet import Map, Marker
 #from streamlit_folium import folium_static
-import pydeck as pdk
+#import pydeck as pdk
 #import folium
-import streamlit_pannellum
-from streamlit_pannellum import streamlit_pannellum
+#import streamlit_pannellum
+#from streamlit_pannellum import streamlit_pannellum
 #import dash_pannellum
 
-import openchord as ocd
+#import openchord as ocd
 
 #import dash
 #from dash import html
