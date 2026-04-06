@@ -78,6 +78,16 @@ def get_data_depenses():
     return df_d
 df_depenses = get_data_depenses()
 
+def get_data_depenses_euro():
+    # Instead of a CSV on disk, you could read from an HTTP endpoint here too.
+    DATA_FILENAME = Path(__file__).parent/'data/df_depenses_euro.csv'
+    df_d_e = pd.read_csv(DATA_FILENAME, sep=';', encoding='utf-8')
+    df_d_e['Montant'] = df_d_e['Montant'].str.replace(",", ".", regex=False)  # replace decimal comma with dot
+    df_d_e['Montant'] = df_d_e['Montant'].astype(float)
+
+    return df_d_e
+df_depenses_euro = get_data_depenses_euro()
+
 # Filter année
 #min_value_debit = df_wellness['Année'].min()
 #max_value_debit = df_wellness['Année'].max()
@@ -107,7 +117,7 @@ selected_country = st.sidebar.multiselect('Quel pays souhaitez-vous analyser ?',
        #'Italie', 'Lettonie', 'Estonie', 'République slovaque', 'Grèce'],
 
 #st.title('Split steps of the story')
-tab0, tab1, tab2, tab3, tab4 = st.tabs([ "Dépenses","Dépenses Habitat","Mesurer le bien être","Bien-être Habitat","Froid"])
+tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs([ "Dépenses","Dépenses Habitat","Mesurer le bien être","_","Bien-être Habitat","Froid"])
 
 with tab0:
     st.header('Dépenses', divider='gray')
@@ -156,7 +166,7 @@ with tab1:
                             'Ordre<br>public<br>et<br>sécurité':'lightgrey','Défense':'lightgrey','Habitat':'darkblue',
                             'Sports,<br>culture<br>et<br>religions':'lightgrey',"Protection<br>de<br>l'environnement":'green' }
     )
-    st.plotly_chart(fig0)
+    st.plotly_chart(fig0) #, use_container_width=True)
 
     st.info('Info message')
 
@@ -167,6 +177,17 @@ with tab2:
     # Insert a chat message container.
     with st.chat_message("user"):
         st.write("Hello 👋")
+        #Scatter doubler les graphiques
+        import plotly.express as px
+        fig = px.line(df_depenses_euro[df_depenses_euro['Dépense'].str.contains("ogement")].query("Montant>0 "), x="Année", y="Montant", color="Dépense",#size="Valeur_Mesurée", & Dépense=='Accessibilité financière du logement'
+                    hover_data=["Opération","Cde_Dépense","Dépense"], #size="Valeur_Mesurée", 
+                        #animation_frame="Année",facet_row ="Cde_Mesure",color_continuous_scale='RdBu',
+                        facet_col ="Opération", facet_col_wrap=2,height=800,
+                        title="Dépense'", #facet_row ="Unité", height=700
+                        ) #,  height=700) #width=800, facet_row="Pays",facet_col="Mesure", 
+        fig.show()
+        #fig.show(autorange= 'True')
+        #fig.update_xaxes(rangeslider_visible=True )
         st.line_chart(np.random.randn(30, 3))
 
         # Display a chat input widget.
@@ -247,6 +268,22 @@ with tab3:
     #    placeholder.write("Accessibilité financière du logement") # Display content
 
 with tab4:
+    st.header('Température du logement', divider='gray')
+    st.caption("Incapacité à maintenir le logement à bonne température ")
+    #Scatter doubler les graphiques .query("Valeur_Mesurée>0")
+    import plotly.express as px
+    
+    filtered_df_wellness = df_wellness[(df_wellness['Pays'].isin(selected_country))]
+    fig_w = px.scatter(filtered_df_wellness[filtered_df_wellness['Domaine'].str.contains("ogement")].sort_values(by=['Année','Valeur_Mesurée','Pays'], ascending=[True,False,False]), #.query("Année>2011 & Année<=2022"), 
+                    y="Valeur_Mesurée", x="Pays", size="Valeur_Mesurée", color="Cde_Mesure", hover_data=["Cde_Mesure","Unité"], #size="Valeur_Mesurée", 
+                    animation_frame="Année",
+                    size_max=20, title="Bien être",  #facet_row ="Unité", height=700
+                    ) #,  height=700) #width=800, facet_row="Pays",facet_col="Mesure", 
+    st.plotly_chart(fig_w)
+    #fig.show(autorange= 'True')
+    #fig.update_xaxes(rangeslider_visible=True )
+
+with tab5:
     st.header('Température du logement', divider='gray')
     st.caption("Incapacité à maintenir le logement à bonne température ")
     #st.snow()
