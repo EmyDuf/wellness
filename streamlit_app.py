@@ -86,20 +86,61 @@ df_depenses = get_data_depenses()
 #    min_value=max_value_debit,
 #    value=[min_value_debit, max_value_debit],max_value=max_value_debit)
 
+# Filter année
+year2 = df_wellness['Année'].unique()
+if not len(year2):
+    st.warning("Selectionner au moins une année")
+
+selected_year = st.sidebar.multiselect('Quelle année vous interesse ?', year2, 
+                                       default=[2013, 2023])
+
 # Filter pays
 country = df_wellness['Pays'].unique()
 if not len(country):
     st.warning("Selectionner au moins un Pays")
 
-selected_country = st.sidebar.multiselect('Quel  souhaitez-vous regarder ?', country,
+selected_country = st.sidebar.multiselect('Quel pays souhaitez-vous analyser ?', country,
                                           default=['France', 'Allemagne'])
        #'Pays-Bas', 'Portugal', 'Luxembourg', 'Belgique',
        #'Autriche', 'Irlande', 'Finlande', 'Espagne', 'Lituanie',
        #'Italie', 'Lettonie', 'Estonie', 'République slovaque', 'Grèce'],
 
 #st.title('Split steps of the story')
-tab0, tab1 = st.tabs([ "Bien-être", "PIB"])
+tab0, tab1 = st.tabs([ "Dépenses","Bien-être"])
+
 with tab0:
+    st.header('Dépenses', divider='gray')
+    st.caption("Dépenses :money:")
+    
+    import plotly.express as px
+    filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
+    df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[True,False,False]).query("Année==2021 & value>0") 
+
+
+    fig3 = px.treemap(filtered_df_depenses ,
+                    path=["Année",'Pays','variable'], 
+                    values='value',color='variable', 
+                    color_discrete_map={'(?)':'lightgrey', 'Protection<br>sociale':'gold', 'Santé':'#a1ddd2',
+                                        'Services<br>publics':'','Education':'', 'Affaires<br>économiques':'',
+                                        'Ordre<br>public<br>et<br>sécurité':'','Défense':'','Habitat':'darkblue',
+                                        'Sports,<br>culture<br>et<br>religions':'',"Protection<br>de<br>l'environnement":'green' }
+                    #color_continuous_scale="Viridis",
+                    )
+
+    fig3.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
+    #fig3.update_traces(root_color="lightgrey")
+    fig3.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
+    fig3.update_layout(margin = dict(t=30, l=5, r=5, b=5))
+    #fig3.show()
+    st.plotly_chart(fig3, use_container_width=True)
+
+    st.dataframe(
+        df_depenses,
+        use_container_width=True,
+        #column_config={"code_crue": st.column_config.TextColumn("code_crue")},
+    )
+
+with tab1:
     st.header('Bien-être', divider='gray')
     st.caption("Bien-être :smile: ")
 
@@ -155,31 +196,3 @@ with tab0:
         placeholder.empty() # Clear the placeholder
     else:
         placeholder.write("Accessibilité financière du logement") # Display content
-
-
-with tab1:
-    st.header('Dépenses', divider='gray')
-    st.caption("Dépenses :money:")
-    
-    import plotly.express as px
-    filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
-    df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[False,False,False]).query("Année==2021 & value>0") 
-
-
-    fig3 = px.treemap(filtered_df_depenses ,
-                    path=["Année",'Pays','variable'], 
-                    values='value',color='variable', 
-                    #color_continuous_scale="Viridis",
-                    )
-
-    fig3.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
-    fig3.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
-    fig3.update_layout(margin = dict(t=30, l=5, r=5, b=5))
-    #fig3.show()
-    st.plotly_chart(fig3, use_container_width=True)
-
-    st.dataframe(
-        df_depenses,
-        use_container_width=True,
-        #column_config={"code_crue": st.column_config.TextColumn("code_crue")},
-    )
