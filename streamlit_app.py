@@ -20,6 +20,8 @@ import streamlit_pannellum
 from streamlit_pannellum import streamlit_pannellum
 #import dash_pannellum
 
+import openchord as ocd
+
 #import dash
 #from dash import html
 #import dash_pannellum

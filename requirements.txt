@@ -7,3 +7,4 @@ streamlit_folium
 pydeck
 plotly_calplot
 streamlit_pannellum
+#mpl-chord-diagram
