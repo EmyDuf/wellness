@@ -92,7 +92,7 @@ if not len(year2):
     st.warning("Selectionner au moins une année")
 
 selected_year = st.sidebar.multiselect('Quelle année vous interesse ?', year2, 
-                                       default=[2013, 2023])
+                                       default=[2011, 2021])
 
 # Filter pays
 country = df_wellness['Pays'].unique()
@@ -106,14 +106,14 @@ selected_country = st.sidebar.multiselect('Quel pays souhaitez-vous analyser ?',
        #'Italie', 'Lettonie', 'Estonie', 'République slovaque', 'Grèce'],
 
 #st.title('Split steps of the story')
-tab0, tab1 = st.tabs([ "Dépenses","Bien-être"])
+tab0, tab1, tab2 = st.tabs([ "Dépenses","Dépenses Habitat","Bien-être Habitat"])
 
 with tab0:
     st.header('Dépenses', divider='gray')
     st.caption("Dépenses :money:")
     
     import plotly.express as px
-    filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
+    filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country)) & (df_depenses['Année'].isin(selected_year))]
     df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[True,False,False]).query("Année==2021 & value>0") 
 
 
@@ -134,15 +134,32 @@ with tab0:
     #fig3.show()
     st.plotly_chart(fig3, use_container_width=True)
 
-    st.dataframe(
-        df_depenses,
-        use_container_width=True,
-        #column_config={"code_crue": st.column_config.TextColumn("code_crue")},
-    )
+    st.button("L'année est les catégories sont triées de la gauche vers la droite, de la plus grande valeur à la plus petite.")
+
+    
+    #filtered_df_depenses_show=filtered_df_depenses
+    #filtered_df_depenses_show['variable'] = filtered_df_depenses_show['variable'].str.replace('<br>',' ')
+    #st.dataframe(
+    #    filtered_df_depenses_show,
+    #    use_container_width=True,
+    #    #column_config={"code_crue": st.column_config.TextColumn("code_crue")},
+    #)
 
 with tab1:
-    st.header('Bien-être', divider='gray')
-    st.caption("Bien-être :smile: ")
+    import plotly.express as px
+    #.query("Année==2003 |Année==2013 | Année==2023")
+    fig0 = px.line(filtered_df_depenses,x="Année", y="value", color="variable", #barmode = 'group', cumulative = False, 
+        facet_col="Pays", facet_col_wrap=4, #height=1000, title="df_depenses" #'group','overlay', 'relative' facet_col="variable", facet_col_wrap=2 .update_traces( marker={"color": "red"}, name='Pays', showlegend=True #name="red",
+        color_discrete_map={ '(?)':'lightgrey','Protection<br>sociale':'gold', 'Santé':'#a1ddd2',
+                            'Services<br>publics':'lightgrey','Education':'lightgrey', 'Affaires<br>économiques':'lightgrey',
+                            'Ordre<br>public<br>et<br>sécurité':'lightgrey','Défense':'lightgrey','Habitat':'darkblue',
+                            'Sports,<br>culture<br>et<br>religions':'lightgrey',"Protection<br>de<br>l'environnement":'green' }
+    )
+    st.plotly_chart(fig0)
+
+with tab2:
+    st.header('Bien-être Habitat', divider='gray')
+    st.caption("Bien-être habitat :smile: ")
 
     from PIL import Image
     import plotly.express as px
@@ -190,9 +207,9 @@ with tab1:
     fig1.update_traces(mode="markers+lines")
     st.plotly_chart(fig1)
 
-    placeholder = st.empty() # Create a placeholder
-
-    if st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement"):
-        placeholder.empty() # Clear the placeholder
-    else:
-        placeholder.write("Accessibilité financière du logement") # Display content
+    st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement")
+    #placeholder = st.empty() # Create a placeholder
+    #if st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement"):
+    #    placeholder.empty() # Clear the placeholder
+    #else:
+    #    placeholder.write("Accessibilité financière du logement") # Display content
