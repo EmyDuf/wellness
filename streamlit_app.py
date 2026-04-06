@@ -26,8 +26,8 @@ import geopandas as gpd
 #from dash import html
 #import dash_pannellum
 
-from plotly.subplots import make_subplots
-from plotly_calplot import calplot
+#from plotly.subplots import make_subplots
+#from plotly_calplot import calplot
 #libxmp #ipyleaflet #pyproj #json #folium
 #import json
 import geopandas as gpd
@@ -148,6 +148,13 @@ with tab0:
     #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
     fig1.update_traces(mode="markers+lines")
     st.plotly_chart(fig1)
+
+    placeholder = st.empty() # Create a placeholder
+
+    if st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement"):
+        placeholder.empty() # Clear the placeholder
+    else:
+        placeholder.write("Accessibilité financière du logement") # Display content
 
 
 with tab1:
