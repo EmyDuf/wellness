@@ -230,8 +230,8 @@ with tab3:
                 xref="x", yref="y",
                 xanchor="center", yanchor="middle",
                 x=row["Mesure"], y=row["Valeur_Mesurée"],
-                sizex=5,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
-                sizey=5,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
+                sizex=7,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
+                sizey=7,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
                 sizing="contain", opacity=0.8, layer="above"
             )
         )
