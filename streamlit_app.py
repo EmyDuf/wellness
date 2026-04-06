@@ -78,16 +78,6 @@ def get_data_depenses():
     return df_d
 df_depenses = get_data_depenses()
 
-def get_data_depenses_euro():
-    # Instead of a CSV on disk, you could read from an HTTP endpoint here too.
-    DATA_FILENAME = Path(__file__).parent/'data/df_depenses_euro.csv'
-    df_d_e = pd.read_csv(DATA_FILENAME, sep=';', encoding='utf-8')
-    df_d_e['Montant'] = df_d_e['Montant'].str.replace(",", ".", regex=False)  # replace decimal comma with dot
-    df_d_e['Montant'] = df_d_e['Montant'].astype(float)
-
-    return df_d_e
-df_depenses_euro = get_data_depenses_euro()
-
 # Filter année
 #min_value_debit = df_wellness['Année'].min()
 #max_value_debit = df_wellness['Année'].max()
@@ -157,6 +147,8 @@ with tab0:
     #)
 
 with tab1:
+    st.header('Dépenses', divider='gray')
+    st.caption("Dépenses : dans le temps ")
     import plotly.express as px
     #.query("Année==2003 |Année==2013 | Année==2023")
     fig0 = px.line(filtered_df_depenses,x="Année", y="value", color="variable", #barmode = 'group', cumulative = False, 
@@ -170,6 +162,7 @@ with tab1:
 
     st.info('Info message')
 
+
 with tab2:
     st.header('Bien-être', divider='gray')
     st.caption("Bien-être par échelle :smile: ")
@@ -179,13 +172,13 @@ with tab2:
         st.write("Hello 👋")
         #Scatter doubler les graphiques
         import plotly.express as px
-        fig = px.line(df_depenses_euro[df_depenses_euro['Dépense'].str.contains("ogement")].query("Montant>0 "), x="Année", y="Montant", color="Dépense",#size="Valeur_Mesurée", & Dépense=='Accessibilité financière du logement'
-                    hover_data=["Opération","Cde_Dépense","Dépense"], #size="Valeur_Mesurée", 
-                        #animation_frame="Année",facet_row ="Cde_Mesure",color_continuous_scale='RdBu',
-                        facet_col ="Opération", facet_col_wrap=2,height=800,
-                        title="Dépense'", #facet_row ="Unité", height=700
-                        ) #,  height=700) #width=800, facet_row="Pays",facet_col="Mesure", 
-        fig.show()
+        #fig = px.line(df_depenses_euro[df_depenses_euro['Dépense'].str.contains("ogement")].query("Montant>0 "), x="Année", y="Montant", color="Dépense",#size="Valeur_Mesurée", & Dépense=='Accessibilité financière du logement'
+        #            hover_data=["Opération","Cde_Dépense","Dépense"], #size="Valeur_Mesurée", 
+        #                #animation_frame="Année",facet_row ="Cde_Mesure",color_continuous_scale='RdBu',
+        #                facet_col ="Opération", facet_col_wrap=2,height=800,
+        #                title="Dépense'", #facet_row ="Unité", height=700
+        #                ) #,  height=700) #width=800, facet_row="Pays",facet_col="Mesure", 
+        #fig.show()
         #fig.show(autorange= 'True')
         #fig.update_xaxes(rangeslider_visible=True )
         st.line_chart(np.random.randn(30, 3))
@@ -194,6 +187,7 @@ with tab2:
         st.chat_input("Say something") 
 
     st.radio('Selectionner', options=[1,2,3,4,5])
+
 
 with tab3:
     st.header('Bien-être Habitat', divider='gray')
@@ -266,6 +260,7 @@ with tab3:
     #    placeholder.empty() # Clear the placeholder
     #else:
     #    placeholder.write("Accessibilité financière du logement") # Display content
+
 
 with tab4:
     st.header('Température du logement', divider='gray')
