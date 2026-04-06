@@ -3,6 +3,7 @@
 #import altair as alt
 import streamlit as st
 import pandas as pd
+import numpy as np
 import math
 import datetime
 from pathlib import Path
@@ -106,7 +107,7 @@ selected_country = st.sidebar.multiselect('Quel pays souhaitez-vous analyser ?',
        #'Italie', 'Lettonie', 'Estonie', 'République slovaque', 'Grèce'],
 
 #st.title('Split steps of the story')
-tab0, tab1, tab2 = st.tabs([ "Dépenses","Dépenses Habitat","Bien-être Habitat"])
+tab0, tab1, tab2, tab3, tab4 = st.tabs([ "Dépenses","Dépenses Habitat","Mesurer le bien être","Bien-être Habitat","Froid"])
 
 with tab0:
     st.header('Dépenses', divider='gray')
@@ -157,7 +158,23 @@ with tab1:
     )
     st.plotly_chart(fig0)
 
+    st.info('Info message')
+
 with tab2:
+    st.header('Bien-être', divider='gray')
+    st.caption("Bien-être par échelle :smile: ")
+
+    # Insert a chat message container.
+    with st.chat_message("user"):
+        st.write("Hello 👋")
+        st.line_chart(np.random.randn(30, 3))
+
+        # Display a chat input widget.
+        st.chat_input("Say something") 
+
+    st.radio('Selectionner', options=[1,2,3,4,5])
+
+with tab3:
     st.header('Bien-être Habitat', divider='gray')
     st.caption("Bien-être habitat :smile: ")
 
@@ -170,8 +187,9 @@ with tab2:
 
     #df = px.data.gapminder().query("year==2007")
     ## Custom sorting dictionary
-    custom_order = {'Ménages disposant d’un accès internet' : 0,'Accessibilité financière du logement': 1, 
-                    'Surcharge financière liée au coût du logement': 2, 'Incapacité à maintenir le logement à bonne température': 3, 'Ménages vivant dans des logements surpeuplés': 4}
+    custom_order = {'Accessibilité financière du logement': 0, 
+                    'Surcharge financière liée au coût du logement': 1, 'Incapacité à maintenir le logement à bonne température': 2, 
+                    'Ménages vivant dans des logements surpeuplés': 3, 'Ménages disposant d’un accès internet' : 4}
     ## Sorting the DataFrame using the key argument
     df2 = filtered_df_wellness.sort_values(by=['Pays','Année'], ascending=[False,False]).query("Domaine =='Logement' & Année==2022") #.head(1) #| Année==2021")
     df2 = df2.sort_values(by=['Mesure'], key=lambda x: x.map(custom_order))
@@ -208,8 +226,63 @@ with tab2:
     st.plotly_chart(fig1)
 
     st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement")
+    
+    col1, col2, col3 = st.columns(3)
+    col1.write('Column 1')
+    col2.write('Column 2')
+    col3.write('Column 3')
+    # Three columns with different widths
+    col1, col2, col3 = st.columns([3,1,1])
+    # col1 is wider
+                
+    # Using 'with' notation:
+    with col1:
+        st.write('This is column 1')
+
+    
     #placeholder = st.empty() # Create a placeholder
     #if st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement"):
     #    placeholder.empty() # Clear the placeholder
     #else:
     #    placeholder.write("Accessibilité financière du logement") # Display content
+
+with tab4:
+    st.header('Température du logement', divider='gray')
+    st.caption("Incapacité à maintenir le logement à bonne température ")
+    #st.snow()
+
+     ## Sorting the DataFrame using the key argument
+    df_wellness = df_wellness.sort_values(by=['Valeur_Mesurée', 'Pays','Année'], ascending=[False,False,False]).query("Domaine =='Logement' & Année==2023 & Mesure== 'Incapacité à maintenir le logement à bonne température'") #.head(1) #| Année==2021")
+    df_wellness = df_wellness.sort_values(by=['Mesure'], key=lambda x: x.map(custom_order))
+
+    figf = px.scatter(
+        df_wellness,
+        x="Pays", #size= 'Valeur_Mesurée', #size_max=25,
+        y="Valeur_Mesurée", color="Pays",height=500,width=800,
+        hover_name="Pays", size_max=5,
+        hover_data=["Domaine", "Valeur_Mesurée","Mesure", "Unité"]
+    )
+
+    figf.update_traces(marker_color="rgba(0,0,0,0)")
+    figf.update_traces(line=dict(width=0.5)) #color="Black",
+
+
+    #maxDim = df2[["Mesure", "Valeur_Mesurée"]].max().idxmax()
+    #maxi = df2[maxDim].max()
+    for i, row in df_wellness.iterrows():
+        country = row['Cde_Pays'] #.replace(" ", "-")
+        figf.add_layout_image(
+            dict(source=Image.open(f"flag/{country}.png"),
+                xref="x", yref="y",
+                xanchor="center", yanchor="middle",
+                x=row["Pays"], y=row["Valeur_Mesurée"],
+                sizex=1,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
+                sizey=1,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
+                sizing="contain", opacity=0.8, layer="above"
+            )
+        )
+
+    #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
+    figf.update_traces(mode="markers+lines")
+    st.plotly_chart(figf)
+
