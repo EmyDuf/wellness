@@ -375,16 +375,16 @@ with tab1:
         #    st.write("L’accessibilité financière du logement fait référence au pourcentage du revenu disponible brut ajusté du ménage qui reste disponible pour le ménage après déduction des coûts de logement. Les coûts de logement comprennent le loyer (y compris les loyers imputés pour les logements détenus par leurs propriétaires occupants) et l'entretien (dépenses de réparation du logement, y compris les services divers, l'approvisionnement en eau, l'électricité, le gaz et autres combustibles, ainsi que les dépenses liées au mobilier, à l'ameublement, équipements ménagers et biens et services pour l’entretien courant de la maison).")
         #    #Les données proviennent de la base de données des comptes nationaux de l'OCDE et concernent à la fois les ménages et les institutions sans but lucratif au service des ménages. Les pays utilisant actuellement la version COICOP 2018 des dépenses de consommation finale annuelle des ménages comprennent l'Autriche, la Belgique, la Bulgarie, la République tchèque, le Danemark, l'Estonie, la France, l'Allemagne, la Hongrie, l'Irlande, l'Italie, la Corée, la Lettonie, la Lituanie, les Pays-Bas, le Portugal, la Slovénie et l'Espagne et la Suède.
         with col2:
-            st.image('./img/7_v2.svg', caption="Sample Image", width=400)
+            st.image('./img/7_v2.svg')
             st.write("Consacrer plus de 40 % de ses revenus aux coûts de logement. Les coûts de logement incluent les loyers réels.")
             #Aucune donnée sur les remboursements du principal hypothécaire n’est disponible pour le Danemark. Pour le Chili, le Mexique, la Corée et les États-Unis, le revenu brut est utilisé plutôt que le revenu disponible. Les données sont tirées de la base de données de l'OCDE sur le logement abordable, qui provient des données d'enquêtes auprès des ménages.
         with col3:
-            st.image('./img/froid.svg', width=400)
+            st.image('./img/froid.svg')
             st.write("Ne pas avoir les moyens de maintenir le logement suffisamment au chaud dans le logement (précarité énergétique).")
             #Les données proviennent d'estimations fournies par les offices statistiques nationaux par le biais des Statistiques de l'Union européenne sur les revenus et les conditions de vie, une enquête représentative au niveau national avec de grands échantillons (d'environ 4 000 individus dans les plus petits États membres à environ 16 000 dans le plus grand) couvrant tous les membres des ménages privés âgés de 16 ans ou plus et disponible pour les pays de l'UE, ainsi que pour la Norvège et la Suisse.
         with col4:
             #st.markdown("<br>", unsafe_allow_html=True)
-            st.image('./img/surpeuples.svg', width=400)
+            st.image('./img/surpeuples.svg')
             st.write("Espace de vie non respecté selon l'âge et la composition du ménage : si moins d'une pièce disponible pour chaque couple du ménage, chaque personne seule âgée de 18 ans ou plus, ... ")
             #Les données proviennent de la base de données de l'OCDE sur le logement abordable, qui utilise les données d'enquêtes auprès des ménages. Au Chili, au Mexique, au Danemark, aux Pays-Bas et aux États-Unis, aucune donnée n’est disponible concernant les locataires subventionnés.
         
