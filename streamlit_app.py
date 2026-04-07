@@ -171,7 +171,8 @@ with tab0:
         col0, col1 = st.columns([1,3])
         with col0:
             st.markdown("<br> <br> <br>", unsafe_allow_html=True)
-            st.write("Pas facile comme exercice... Un rappel des choix que tu as fait :")
+            st.markdown("**Pas facile comme exercice... Un rappel des choix que tu as fait :**")
+            st.markdown("<br>", unsafe_allow_html=True)
             st.write("Habitat : ", num_habitat, "%")
             st.write("Santé : ", num_sante, "%")
             st.write("Protection de l'environnement : ", num_protection_env , "%")
