@@ -178,6 +178,7 @@ with tab0:
         #fig3.show()
         st.plotly_chart(fig_t, use_container_width=True)
 
+        
         #fig_p = px.pie(values=list_x, names=names,color =names , color_discrete_map={'Autre':'lightgrey', 'Protection sociale':'gold', 'Santé':'#a1ddd2',
         #                                    'Habitat':'darkblue',
         #                                    "Protection de l'environnement":'green' })
@@ -297,8 +298,17 @@ with tab1:
     with tabq2:
         st.header('Mesurer le Bien-être à grande échelle', divider='gray')
         st.caption("Question Habitat :smile: :house_with_garden: ")
-        st.text("Question")
-
+        st.text("Les états européens de l'OCDE consacrent entre 1 et 8 % pour l'Habitat. Et toi, que représente tes dépenses pour le logement ?")
+        
+        num_habitat_perso = st.slider("Que représente ton budget dédié à l'Habitat ?", value=2, min_value=0, max_value=100, step=0.5, format="%d%%")
+        num_autre_perso = 100 - num_habitat_perso
+        list_x = [num_habitat_perso, num_autre_perso]
+        names = ['Habitat', "Autre"]
+        fig_p_perso = px.pie(values=list_x, names=names,color =names , color_discrete_map={'Autre':'lightgrey', 
+                                            'Habitat':'darkblue', })
+        fig_p_perso.update_traces(textposition='inside', textinfo='label+percent') #value
+        st.plotly_chart(fig_p_perso)
+    
     #__________________________
     with tabr2:
         st.header("Bien-être dans l'habitat", divider='gray')
