@@ -120,9 +120,7 @@ with tab0:
         st.header("Félicitation pour vos nouvelles responsabilités d'expert comptable du pays.", divider='gray')
         st.caption("La répartition des deniers publics implique une lourde responsabilité et des choix stratégiques difficiles. Faites varier le pourcentage des 4 catégories suivantes sans dépasser 100% de l'enveloppe. Attention à la dette... :euro:")
     
-        coli, col0, col1, col2, col3 = st.columns([1,1,1,1,1])
-        with coli:
-            num_autre = st.slider("Autre", value=39, min_value=38, max_value=40, step=1, format="%d%%")
+        col0, col1, col2, col3, coli = st.columns([1,1,1,1,1])
         with col0:
             num_habitat = st.slider("Quel pourcentage des dépenses faut-il allouer à l'Habitat ?", value=15, min_value=1, max_value=61, step=1, format="%d%%")
         with col1:
@@ -131,15 +129,17 @@ with tab0:
             num_protection_env = st.slider("Protection de l'environnement", value=15, min_value=1, max_value=61, step=1, format="%d%%")
         with col3:
             num_protection_sociale = st.slider("Protection sociale", value=15, min_value=1, max_value=61, step=1, format="%d%%")
-
+        with coli:
+            num_autre = st.slider("Autre", value=39, min_value=38, max_value=40, step=1, format="%d%%")
+        
         #Limit to 100%
         max = 100
         #100 - num_habitat - num_sante - num_protection_env - num_protection_sociale
         sum_pct = num_habitat + num_sante + num_protection_env + num_protection_sociale + num_autre
-        st.write(sum_pct) 
+        st.write("Pourcentage :", sum_pct, "%") 
         st.text('%')
         if sum_pct >100:
-            st.text('Attention, vous êtes trop dépensier. Vous devez réduire les dépenses en dessous de 100 %...')
+            st.text(":red-badge[Attention, vous êtes trop dépensier. Vous devez réduire les dépenses en dessous de 100 %...]")
 
         list_x = [num_habitat, num_sante, num_protection_env, num_protection_sociale, num_autre]
         names = ['Habitat', 'Santé', "Protection de l'environnement", "Protection sociale", "Autre"]
