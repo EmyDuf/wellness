@@ -341,8 +341,8 @@ with tab1:
                         xref="x", yref="y",
                         xanchor="center", yanchor="middle",
                         x=row["Mesure"], y=row["Valeur_Mesurée"],
-                        sizex=2,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
-                        sizey=2,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
+                        sizex=1,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
+                        sizey=1,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
                         sizing="contain", opacity=0.8, layer="above"
                     )
                 )
@@ -355,8 +355,8 @@ with tab1:
 
         #st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement")
         
-        col0, col1, col2, col3, col4 = st.columns([1,1,1,1,1])
-        col1.write('**Accessibilité financière du logement**')
+        col0, col2, col3, col4 = st.columns([1,1,1,1])
+        #col1.write('**Accessibilité financière du logement**')
         col2.write('**Surcharge financière lié au coût du logement**')
         col3.write('**Incapacité à maintenir le logement à bonne température**')
         col4.write('**Taux de surpeuplement**')
@@ -364,7 +364,7 @@ with tab1:
         #col1, col2, col3, col4 = st.columns([4,1,1])
         # col1 is wider
 
-        col1.write("*Pourcentage du revenu disponible brut restant, après déduction des loyers et de l'entretien du logement.*")
+        #col1.write("*Pourcentage du revenu disponible brut restant, après déduction des loyers et de l'entretien du logement.*")
         col2.write("*Pourcentage de la population consacrant plus de 40 % de leur revenu aux frais de logement.*")
         col3.write("*Pourcentage de ménages déclarant qu'ils n'ont pas les moyens de chauffer adéquatement leur logement.*")
         col4.write("*Pourcentage de ménages vivant dans des logements surpeuplés.*")
@@ -373,17 +373,17 @@ with tab1:
         # Using 'with' notation:
         with col0:
             st.write("")
-        with col1:
-            st.write("L’accessibilité financière du logement fait référence au pourcentage du revenu disponible brut ajusté du ménage qui reste disponible pour le ménage après déduction des coûts de logement. Les coûts de logement comprennent le loyer (y compris les loyers imputés pour les logements détenus par leurs propriétaires occupants) et l'entretien (dépenses de réparation du logement, y compris les services divers, l'approvisionnement en eau, l'électricité, le gaz et autres combustibles, ainsi que les dépenses liées au mobilier, à l'ameublement, équipements ménagers et biens et services pour l’entretien courant de la maison).")
-            #Les données proviennent de la base de données des comptes nationaux de l'OCDE et concernent à la fois les ménages et les institutions sans but lucratif au service des ménages. Les pays utilisant actuellement la version COICOP 2018 des dépenses de consommation finale annuelle des ménages comprennent l'Autriche, la Belgique, la Bulgarie, la République tchèque, le Danemark, l'Estonie, la France, l'Allemagne, la Hongrie, l'Irlande, l'Italie, la Corée, la Lettonie, la Lituanie, les Pays-Bas, le Portugal, la Slovénie et l'Espagne et la Suède.
+        #with col1:
+        #    st.write("L’accessibilité financière du logement fait référence au pourcentage du revenu disponible brut ajusté du ménage qui reste disponible pour le ménage après déduction des coûts de logement. Les coûts de logement comprennent le loyer (y compris les loyers imputés pour les logements détenus par leurs propriétaires occupants) et l'entretien (dépenses de réparation du logement, y compris les services divers, l'approvisionnement en eau, l'électricité, le gaz et autres combustibles, ainsi que les dépenses liées au mobilier, à l'ameublement, équipements ménagers et biens et services pour l’entretien courant de la maison).")
+        #    #Les données proviennent de la base de données des comptes nationaux de l'OCDE et concernent à la fois les ménages et les institutions sans but lucratif au service des ménages. Les pays utilisant actuellement la version COICOP 2018 des dépenses de consommation finale annuelle des ménages comprennent l'Autriche, la Belgique, la Bulgarie, la République tchèque, le Danemark, l'Estonie, la France, l'Allemagne, la Hongrie, l'Irlande, l'Italie, la Corée, la Lettonie, la Lituanie, les Pays-Bas, le Portugal, la Slovénie et l'Espagne et la Suède.
         with col2:
-            st.write("La surcharge financière lié au coût du logement est mesurée par le pourcentage de la population situés dans les 40 % inférieurs de la répartition des revenus qui consacrent plus de 40 % de leur revenu disponible aux coûts de logement, ce dernier seuil de 40 % étant basé sur la méthodologie utilisée par Eurostat pour les pays membres de l'UE. Les coûts de logement incluent les loyers réels ainsi que les coûts hypothécaires, englobant le remboursement du capital et les intérêts ; contrairement à la mesure de l’accessibilité financière du logement tirée des comptes nationaux, aucun loyer imputé pour les logements occupés par leur propriétaire n’est inclus. ")
+            st.write("Consacrer plus de 40 % de ses revenus aux coûts de logement. Les coûts de logement incluent les loyers réels.")
             #Aucune donnée sur les remboursements du principal hypothécaire n’est disponible pour le Danemark. Pour le Chili, le Mexique, la Corée et les États-Unis, le revenu brut est utilisé plutôt que le revenu disponible. Les données sont tirées de la base de données de l'OCDE sur le logement abordable, qui provient des données d'enquêtes auprès des ménages.
         with col3:
-            st.write("L’incapacité à maintenir une température adéquate dans le logement (précarité énergétique) si le ménage déclare ne pas avoir les moyens de maintenir le logement suffisamment au chaud.")
+            st.write("Ne pas avoir les moyens de maintenir le logement suffisamment au chaud dans le logement (précarité énergétique).")
             #Les données proviennent d'estimations fournies par les offices statistiques nationaux par le biais des Statistiques de l'Union européenne sur les revenus et les conditions de vie, une enquête représentative au niveau national avec de grands échantillons (d'environ 4 000 individus dans les plus petits États membres à environ 16 000 dans le plus grand) couvrant tous les membres des ménages privés âgés de 16 ans ou plus et disponible pour les pays de l'UE, ainsi que pour la Norvège et la Suisse.
         with col4:
-            st.write("Le taux de surpeuplement considère différents besoins en espace de vie selon l'âge et la composition du ménage. Surpeuplement si moins d'une pièce est disponible pour : chaque couple du ménage ; chaque personne seule âgée de 18 ans ou plus ; ... ")
+            st.write("Espace de vie non respecté selon l'âge et la composition du ménage : si moins d'une pièce disponible pour chaque couple du ménage, chaque personne seule âgée de 18 ans ou plus, ... ")
             #Les données proviennent de la base de données de l'OCDE sur le logement abordable, qui utilise les données d'enquêtes auprès des ménages. Au Chili, au Mexique, au Danemark, aux Pays-Bas et aux États-Unis, aucune donnée n’est disponible concernant les locataires subventionnés.
         
         #placeholder = st.empty() # Create a placeholder
@@ -457,3 +457,5 @@ with tab2:
         #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
         figf.update_traces(mode="markers+lines")
         st.plotly_chart(figf)
+
+        st.info("Alors que le critère considère uniquement le maintien du logement au chaud le top 4 comprend 3 pays au climat continental : Grèce, Portugal, Espagne.")
