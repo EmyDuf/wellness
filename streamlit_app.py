@@ -96,7 +96,7 @@ if not len(year2):
     st.warning("Selectionner au moins une année")
 
 selected_year = st.sidebar.multiselect('Quelle année vous interesse ?', year2, 
-                                       default=[2021])
+                                       default=[2023])
 
 # Filter pays
 country = df_wellness['Pays'].unique()
@@ -120,51 +120,47 @@ with tab0:
         st.header("Félicitation pour vos nouvelles responsabilités d'expert comptable du pays.", divider='gray')
         st.caption("La répartition des deniers publics implique une lourde responsabilité et des choix stratégiques difficiles. Faites varier le pourcentage des 4 catégories suivantes sans dépasser 100% de l'enveloppe. Attention à la dette... :euro:")
     
-        col0, col1, col2, col3, coli = st.columns([1,1,1,1,1])
+        col0, col1, col2 = st.columns([1,1,3])
         with col0:
             num_habitat = st.slider("Quel pourcentage des dépenses faut-il allouer à l'Habitat ?", value=15, min_value=1, max_value=61, step=1, format="%d%%")
-        with col1:
             num_sante = st.slider("Santé", value=15, min_value=1, max_value=61, step=1, format="%d%%")
-        with col2:
             num_protection_env = st.slider("Protection de l'environnement", value=15, min_value=1, max_value=61, step=1, format="%d%%")
-        with col3:
             num_protection_sociale = st.slider("Protection sociale", value=15, min_value=1, max_value=61, step=1, format="%d%%")
-        with coli:
             num_autre = st.slider("Autre", value=39, min_value=38, max_value=40, step=1, format="%d%%")
         
-        #Limit to 100%
-        max = 100
-        #100 - num_habitat - num_sante - num_protection_env - num_protection_sociale
-        sum_pct = num_habitat + num_sante + num_protection_env + num_protection_sociale + num_autre
-        st.write("Pourcentage :", sum_pct, "%") 
-        st.text('%')
-        if sum_pct >100:
-            st.text(":red-badge[Attention, vous êtes trop dépensier. Vous devez réduire les dépenses en dessous de 100 %...]")
+        with col1:
+            #Limit to 100%
+            max = 100
+            #100 - num_habitat - num_sante - num_protection_env - num_protection_sociale
+            sum_pct = num_habitat + num_sante + num_protection_env + num_protection_sociale + num_autre
+            st.write("Pourcentage :", sum_pct, "%") 
+            if sum_pct >100:
+                st.text(":red-orange[Attention, vous êtes trop dépensier. Vous devez réduire les dépenses en dessous de 100 %...]")
 
-        list_x = [num_habitat, num_sante, num_protection_env, num_protection_sociale, num_autre]
-        names = ['Habitat', 'Santé', "Protection de l'environnement", "Protection sociale", "Autre"]
+        with col2:
+            list_x = [num_habitat, num_sante, num_protection_env, num_protection_sociale, num_autre]
+            names = ['Habitat', 'Santé', "Protection de l'environnement", "Protection sociale", "Autre"]
 
-        df_t = pd.DataFrame({'Pourcentage': list_x,'Dépense': names,})
-        fig_t = px.treemap(df_t, path=["Dépense"], values="Pourcentage",color="Dépense", 
-                        color_discrete_map={'Autre':'lightgrey', 'Protection sociale':'gold', 'Santé':'#a1ddd2',
-                                            'Habitat':'darkblue',
-                                            "Protection de l'environnement":'green' }
-                        #color_continuous_scale="Viridis",
-                        )
+            df_t = pd.DataFrame({'Pourcentage': list_x,'Dépense': names,})
+            fig_t = px.treemap(df_t, path=["Dépense"], values="Pourcentage",color="Dépense", 
+                            color_discrete_map={'Autre':'lightgrey', 'Protection sociale':'gold', 'Santé':'#a1ddd2',
+                                                'Habitat':'darkblue',
+                                                "Protection de l'environnement":'green' },
+                            hover_data = ['Dépense', 'Pourcentage']
+                            #color_continuous_scale="Viridis",
+                            )
 
-        fig_t.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
-        #fig3.update_traces(root_color="lightgrey")
-        fig_t.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
-        fig_t.update_layout(margin = dict(t=30, l=5, r=5, b=5))
-        #fig3.show()
-        st.plotly_chart(fig_t, use_container_width=True)
-
+            fig_t.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
+            #fig3.update_traces(root_color="lightgrey")
+            fig_t.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
+            fig_t.update_layout(margin = dict(t=30, l=5, r=5, b=5))
+            st.plotly_chart(fig_t, use_container_width=True)
         
-        #fig_p = px.pie(values=list_x, names=names,color =names , color_discrete_map={'Autre':'lightgrey', 'Protection sociale':'gold', 'Santé':'#a1ddd2',
-        #                                    'Habitat':'darkblue',
-        #                                    "Protection de l'environnement":'green' })
-        #fig_p.update_traces(textposition='inside', textinfo='label+percent') #value
-        #st.plotly_chart(fig_p)
+            #fig_p = px.pie(values=list_x, names=names,color =names , color_discrete_map={'Autre':'lightgrey', 'Protection sociale':'gold', 'Santé':'#a1ddd2',
+            #                                    'Habitat':'darkblue',
+            #                                    "Protection de l'environnement":'green' })
+            #fig_p.update_traces(textposition='inside', textinfo='label+percent') #value
+            #st.plotly_chart(fig_p)
 
     #__________________________
     with tabr:
@@ -292,7 +288,7 @@ with tab1:
         st.header("Bien-être dans l'habitat", divider='gray')
         st.caption("Comment mesurer le bien être au sein du logment ? :smile: :house_with_garden: ")
 
-        st.write("La classification [COFOG](https://en.wikipedia.org/wiki/Classification_of_the_Functions_of_Government) regarde le pourcentage dédié à l'Habitat comme critère de bien-être. Au dessus de 40 %, la surcharge financière lié au coût du logement est décrite comme impactant le bien être. Cela conserne 11 % des Français en 2022.")
+        st.write("La classification [COFOG](https://en.wikipedia.org/wiki/Classification_of_the_Functions_of_Government) regarde le pourcentage dédié à l'Habitat comme critère de bien-être. Au dessus de 40 %, la surcharge financière lié au coût du logement est décrite comme impactant le bien être. Cela concerne 11 % des Français en 2022.")
 
         from PIL import Image
         import plotly.express as px
@@ -453,4 +449,4 @@ with tab2:
         figf.update_traces(mode="markers+lines")
         st.plotly_chart(figf)
 
-        st.info("Alors que le critère considère uniquement le maintien du logement au chaud le top 4 comprend 3 pays au climat continental : Grèce, Portugal, Espagne.")
+        st.info("Alors que le critère considère uniquement le maintien du logement au chaud, le top 4 comprend 3 pays au climat méditerranéen chaud : Grèce, Portugal, Espagne.")
