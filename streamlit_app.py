@@ -413,7 +413,7 @@ with tab2:
         st.header('Mesurer le Bien-être à grande échelle', divider='gray')
         st.caption("Question Habitat :smile: :house_with_garden: ")
         st.radio("Avez-vous souffert du froid cet hiver ?", ['Oui','Non'])
-        
+        st.radio("Votre logement est-il bien isolé ?", ['Oui','Non'])
 
     with tabr3:
         st.header('Température du logement', divider='gray')
