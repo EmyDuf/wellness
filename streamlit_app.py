@@ -298,7 +298,7 @@ with tab1:
 
     #__________________________
     with tabr2:
-        st.header('Bien-être dans l'habitat', divider='gray')
+        st.header("Bien-être dans l'habitat", divider='gray')
         st.caption("En 2022 :smile: :house_with_garden: ")
 
         from PIL import Image
