@@ -133,9 +133,10 @@ with tab0:
             max = 100
             #100 - num_habitat - num_sante - num_protection_env - num_protection_sociale
             sum_pct = num_habitat + num_sante + num_protection_env + num_protection_sociale + num_autre
+            st.markdown("<br> <br> <br>", unsafe_allow_html=True)
             st.write("Pourcentage :", sum_pct, "%") 
             if sum_pct >100:
-                st.text(":red-orange[Attention, vous êtes trop dépensier. Vous devez réduire les dépenses en dessous de 100 %...]")
+                st.text(":orange-badge[Attention, vous êtes trop dépensier. Vous devez réduire les dépenses en dessous de 100 %...]")
 
         with col2:
             list_x = [num_habitat, num_sante, num_protection_env, num_protection_sociale, num_autre]
