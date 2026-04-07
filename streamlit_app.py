@@ -122,7 +122,8 @@ with tab0:
     
         col0, col1, col2 = st.columns([1,1,3])
         with col0:
-            num_habitat = st.slider("Quel pourcentage des dépenses faut-il allouer à l'Habitat ?", value=15, min_value=1, max_value=61, step=1, format="%d%%")
+            st.write("Quel pourcentage des dépenses faut-il allouer :")  
+            num_habitat = st.slider("Habitat ?", value=15, min_value=1, max_value=61, step=1, format="%d%%")
             num_sante = st.slider("Santé", value=15, min_value=1, max_value=61, step=1, format="%d%%")
             num_protection_env = st.slider("Protection de l'environnement", value=15, min_value=1, max_value=61, step=1, format="%d%%")
             num_protection_sociale = st.slider("Protection sociale", value=15, min_value=1, max_value=61, step=1, format="%d%%")
@@ -136,7 +137,7 @@ with tab0:
             st.markdown("<br> <br> <br>", unsafe_allow_html=True)
             st.write("Pourcentage :", sum_pct, "%") 
             if sum_pct >100:
-                st.text(":orange-badge[Attention, vous êtes trop dépensier. Vous devez réduire les dépenses en dessous de 100 %...]")
+                st.error("Attention, vous êtes trop dépensier. Vous devez réduire les dépenses en dessous de 100 %...")
 
         with col2:
             list_x = [num_habitat, num_sante, num_protection_env, num_protection_sociale, num_autre]
