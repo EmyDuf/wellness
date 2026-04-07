@@ -110,7 +110,7 @@ selected_country = st.sidebar.multiselect('Quel pays souhaitez-vous analyser ?',
        #'Italie', 'Lettonie', 'Estonie', 'République slovaque', 'Grèce'],
 
 #st.title('Split steps of the story')
-tab0, tab1, tab2 = st.tabs([ "Dépenses","Mesurer le bien être","Incapacité à chauffer"])
+tab0, tab1, tab2 = st.tabs([ "Dépenses","Bien-être","Habitat"])
 
 #__________________________
 #__________________________
@@ -120,25 +120,6 @@ with tab0:
         st.header("Félicitation pour vos nouvelles responsabilités d'expert comptable du pays.", divider='gray')
         st.caption("La répartition des deniers publics implique une lourde responsabilité et des choix stratégiques difficiles. Faites varier le pourcentage des 4 catégories suivantes sans dépasser 100% de l'enveloppe. Attention à la dette... :euro:")
     
-        #def update (change):
-        #    if change == 'x1':
-        #        st.session_state.x2 = st.session_state.x1 / 2
-        #        st.session_state.x3 = st.session_state.x1 / 2
-        #    else:
-        #        st.session_state.x1 = st.session_state.x2 + st.session_state.x3
-
-        #st.slider('x1', value=2, key='x1', on_change=update, args=('x1',))
-        #st.slider('x2', value=1, key='x2', on_change=update, args=('x2',))
-        #st.slider('x3', value=1, key='x3', on_change=update, args=('x3',))
-        #def update (change):
-        #    if change == 'num_habitat':
-        #        ok=1
-                #st.session_state.x2 = st.session_state.x1 / 2
-                #st.session_state.x3 = st.session_state.x1 / 2
-            #else:
-                #st.session_state.x1 = st.session_state.x2 + st.session_state.x3
-
-
         coli, col0, col1, col2, col3 = st.columns([1,1,1,1,1])
         with coli:
             num_autre = st.slider("Autre", value=39, min_value=38, max_value=40, step=1, format="%d%%")
@@ -259,6 +240,7 @@ with tab0:
                                 'Ordre<br>public<br>et<br>sécurité':'lightgrey','Défense':'lightgrey','Habitat':'darkblue',
                                 'Sports,<br>culture<br>et<br>religions':'lightgrey',"Protection<br>de<br>l'environnement":'green' }
         )
+        fig0.update_layout(xaxis_title="", yaxis_title="Pourcentage du budget")
         st.plotly_chart(fig0) #, use_container_width=True)
 
         #st.info("Chaque réaffectation du budget prends du temps pour en mesurer les impacts. En Italie un choix budgetaire fort a été porté sur l'Habitat.")
