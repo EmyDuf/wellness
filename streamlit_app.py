@@ -117,12 +117,12 @@ tab0, tab1, tab2 = st.tabs([ "Dépenses","Bien-être","Habitat"])
 with tab0:
     tabq, tabr = st.tabs([ "Question","Réponse"])
     with tabq:
-        st.header("Félicitation pour vos nouvelles responsabilités d'expert comptable du pays.", divider='gray')
-        st.caption("La répartition des deniers publics implique une lourde responsabilité et des choix stratégiques difficiles. Faites varier le pourcentage des 4 catégories suivantes sans dépasser 100% de l'enveloppe. Attention à la dette... :euro:")
+        st.header("Glissez-vous dans la peau d'un expert comptable à l'échelle d'un pays.", divider='gray')
+        st.caption("La répartition des deniers publics implique une lourde responsabilité et des choix stratégiques difficiles. Essayez de faire varier les 4 catégories suivantes en restant sous la barre des 100% de l'enveloppe. Attention à la dette... :euro:")
     
         col0, col1, col2 = st.columns([1,1,3])
         with col0:
-            st.write("Quel pourcentage des dépenses faut-il allouer :")  
+            st.write("Faites varier le pourcentage des dépenses selon :")
             num_habitat = st.slider("Habitat ?", value=15, min_value=1, max_value=61, step=1, format="%d%%")
             num_sante = st.slider("Santé", value=15, min_value=1, max_value=61, step=1, format="%d%%")
             num_protection_env = st.slider("Protection de l'environnement", value=15, min_value=1, max_value=61, step=1, format="%d%%")
