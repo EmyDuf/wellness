@@ -227,7 +227,9 @@ with tab0:
             color_discrete_map={ '(?)':'lightgrey','Protection<br>sociale':'gold', 'Santé':'#a1ddd2',
                                 'Services<br>publics':'lightgrey','Education':'lightgrey', 'Affaires<br>économiques':'lightgrey',
                                 'Ordre<br>public<br>et<br>sécurité':'lightgrey','Défense':'lightgrey','Habitat':'darkblue',
-                                'Sports,<br>culture<br>et<br>religions':'lightgrey',"Protection<br>de<br>l'environnement":'green' }
+                                'Sports,<br>culture<br>et<br>religions':'lightgrey',"Protection<br>de<br>l'environnement":'green' },
+                                hover_name='variable', 
+                                hover_data=["Valeur_Mesurée", "Unité","Pays"]
         )
         fig0.update_layout(xaxis_title="", yaxis_title="Pourcentage du budget")
         st.plotly_chart(fig0) #, use_container_width=True)
@@ -320,7 +322,7 @@ with tab1:
                 x="Mesure", #size= 'Valeur_Mesurée', #size_max=25,
                 y="Valeur_Mesurée", color="Pays",height=500,width=800,
                 hover_name="Pays", #size_max=20,
-                hover_data=["Domaine", "Valeur_Mesurée","Mesure", "Unité"]
+                hover_data=["Valeur_Mesurée", "Unité"] #"Domaine", "Mesure",
             )
 
             fig1.update_traces(marker_color="rgba(0,0,0,0)")
@@ -429,7 +431,7 @@ with tab2:
                 x="Pays", #size= 'Valeur_Mesurée', #size_max=25,
                 y="Valeur_Mesurée", color="Pays",height=500,width=800,
                 hover_name="Pays", size_max=5,
-                hover_data=["Domaine", "Valeur_Mesurée","Mesure", "Unité"]
+                hover_data=["Valeur_Mesurée"]
             )
             figf.update_layout(yaxis_title="Pourcentage en 2022") #xaxis_title=xaxis_title,
             figf.update_traces(marker_color="rgba(0,0,0,0)")
