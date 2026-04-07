@@ -198,21 +198,14 @@ with tab0:
         coli, col0, col1, col2, col3 = st.columns([1,1,1,1,1])
         with coli:
             st.write("Autre : ", num_autre, "%")
-            #st.markdown("Autre : " , num_autre)
-            #st.write("Autre :")
-            #st.text(num_autre)
         with col0:
-            st.write("Habitat :")
-            st.text(num_habitat)
+            st.write("Habitat : ", num_habitat, "%")
         with col1:
-            st.write("Santé :")
-            st.text(num_sante)
+            st.write("Santé : ", num_sante, "%")
         with col2:
-            st.write("Protection de l'environnement :")
-            st.text(num_protection_env)
+            st.write("Protection de l'environnement : ", num_protection_env , "%")
         with col3:
-            st.write("Protection sociale :")
-            st.text(num_protection_sociale)
+            st.write("Protection sociale : ", num_protection_sociale , "%")
         
         st.write("Si tu étais curieux de connaître le regroupement des autres dépenses passes la souris dessus ou clic pour agrandir la cellule.")
         #st.info("Chaque réaffectation du budget prends du temps pour en mesurer les impacts.")
