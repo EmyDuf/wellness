@@ -104,7 +104,7 @@ if not len(country):
     st.warning("Selectionner au moins un Pays")
 
 selected_country = st.sidebar.multiselect('Quel pays souhaitez-vous analyser ?', country,
-                                          default=['France', 'Allemagne', 'Italie'])
+                                          default=['France', 'Italie'])
        #'Pays-Bas', 'Portugal', 'Luxembourg', 'Belgique',
        #'Autriche', 'Irlande', 'Finlande', 'Espagne', 'Lituanie',
        #'Italie', 'Lettonie', 'Estonie', 'République slovaque', 'Grèce'],
@@ -170,13 +170,14 @@ with tab0:
         st.caption("Dépenses :euro:")
         col0, col1 = st.columns([1,3])
         with col0:
+            st.markdown("<br> <br>", unsafe_allow_html=True)
             st.write("Pas facile comme exercice. Un rappel des choix que tu as fait :")
             st.write("Autre : ", num_autre, "%")
             st.write("Habitat : ", num_habitat, "%")
             st.write("Santé : ", num_sante, "%")
             st.write("Protection de l'environnement : ", num_protection_env , "%")
             st.write("Protection sociale : ", num_protection_sociale , "%")
-            
+
         with col1:
             import plotly.express as px
             filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
