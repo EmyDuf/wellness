@@ -355,9 +355,10 @@ with tab1:
         col0, col2, col3, col4 = st.columns([1,1,1,1])
             
         #col1.write('**Accessibilité financière du logement**')
-        col2.write('**Surcharge financière lié au coût du logement**')
-        col3.write('**Incapacité à maintenir le logement à bonne température**')
-        col4.write('**Taux de surpeuplement**')
+        #col2.write('**Surcharge financière lié au coût du logement**')
+        #col3.write('**Incapacité à maintenir le logement à bonne température**')
+        #col4.write('**Taux de surpeuplement**')
+        
         # Three columns with different widths
         #col1, col2, col3, col4 = st.columns([4,1,1])
         # col1 is wider
