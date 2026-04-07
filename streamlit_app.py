@@ -415,13 +415,13 @@ with tab2:
     tabq3, tabr3 = st.tabs([ "Question","Réponse"])
     #__________________________
     with tabq3:
-        st.header('Mesurer le Bien-être à grande échelle', divider='gray')
+        st.header('Mesurer le Bien-être pour son Habitat', divider='gray')
         st.caption("Question Habitat :smile: :house_with_garden: ")
         st.radio("Avez-vous souffert du froid cet hiver ?", ['Oui','Non'])
         st.radio("Votre logement est-il bien isolé ?", ['Oui','Non'])
 
     with tabr3:
-        st.header('Température du logement', divider='gray')
+        st.header('Mesurer le Bien-être : Température du logement', divider='gray')
         st.caption("Incapacité à maintenir le logement à bonne température ")
         
         col0, col1 = st.columns([1,5])
