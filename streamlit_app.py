@@ -313,7 +313,9 @@ with tab1:
     #__________________________
     with tabr2:
         st.header("Bien-être dans l'habitat", divider='gray')
-        st.caption("En 2022 :smile: :house_with_garden: ")
+        st.caption("Comment mesurer le bien être au sein du logment ? Graphique en 2022 :smile: :house_with_garden: ")
+
+        st.write("La classification [COFOG](https://en.wikipedia.org/wiki/Classification_of_the_Functions_of_Government) regarde le pourcentage dédié à l'Habitat comme critère de bien-être. Au dessus de 40 %, la surcharge financière lié au coût du logement est décrite comme impactant le bien être. Cela conserne 11 % des Français en 2022.")
 
         from PIL import Image
         import plotly.express as px
@@ -333,9 +335,7 @@ with tab1:
 
         col0, col1 = st.columns([1,4])
         with col0:
-            st.write("Comment " \
-            "mesurer le bien être " \
-            "au sein du logment ?")
+            st.markdown("<br> <br> <br>", unsafe_allow_html=True)
             st.image('./img/6.svg')  
         with col1:
             fig1 = px.line(
