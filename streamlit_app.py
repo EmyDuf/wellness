@@ -178,7 +178,7 @@ with tab0:
             st.write("Protection sociale : ", num_protection_sociale , "%")
             st.write("Autre : ", num_autre, "%")
             st.markdown("<br> <br>", unsafe_allow_html=True)        
-            st.info("⇦ Dans le bandeau de gauche tu as la possibilité d'ajouter des années ou des pays. Ensuite pour faciliter la lecture du graphique les années et les catégories sont triées de la gauche vers la droite, de la plus grande valeur à la plus petite.")
+            st.write("⇦ Dans le bandeau de gauche tu as la possibilité d'ajouter des années ou des pays.")
 
         with col1:
             import plotly.express as px
@@ -203,7 +203,7 @@ with tab0:
             fig3.update_layout(margin = dict(t=30, l=5, r=5, b=5))
             #fig3.show()
             st.plotly_chart(fig3, use_container_width=True)
-            st.write("Si tu étais curieux de connaître le regroupement des autres dépenses passes la souris dessus ou clic pour agrandir la cellule.")
+            st.write("En passant la souris sur le graphique, le détail des 'Autres' dépenses s'affiche : 'Services publics', 'Education', etc.")
 
         #st.info("Chaque réaffectation du budget prends du temps pour en mesurer les impacts.")
 
