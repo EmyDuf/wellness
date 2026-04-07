@@ -117,16 +117,16 @@ tab0, tab1, tab2 = st.tabs([ "Dépenses","Bien-être","Habitat"])
 with tab0:
     tabq, tabr = st.tabs([ "Question","Réponse"])
     with tabq:
-        st.header("Glissez-vous dans la peau d'un expert comptable à l'échelle d'un pays.", divider='gray')
+        st.header("Glissez-vous dans la peau d'un expert comptable d'un pays.", divider='gray')
         st.caption("La répartition des deniers publics implique une lourde responsabilité et des choix stratégiques difficiles. Essayez de faire varier les 4 catégories suivantes en restant sous la barre des 100% de l'enveloppe. Attention à la dette... :euro:")
     
         col0, col1, col2 = st.columns([1,1,3])
         with col0:
-            st.write("Faites varier le pourcentage des dépenses selon :")
-            num_habitat = st.slider("Habitat ?", value=15, min_value=1, max_value=61, step=1, format="%d%%")
-            num_sante = st.slider("Santé", value=15, min_value=1, max_value=61, step=1, format="%d%%")
-            num_protection_env = st.slider("Protection de l'environnement", value=15, min_value=1, max_value=61, step=1, format="%d%%")
-            num_protection_sociale = st.slider("Protection sociale", value=15, min_value=1, max_value=61, step=1, format="%d%%")
+            st.write("Faites varier le pourcentage des dépenses allouées pour :")
+            num_habitat = st.slider("L'Habitat ?", value=15, min_value=1, max_value=61, step=1, format="%d%%")
+            num_sante = st.slider("La Santé", value=15, min_value=1, max_value=61, step=1, format="%d%%")
+            num_protection_env = st.slider("La Protection de l'environnement", value=15, min_value=1, max_value=61, step=1, format="%d%%")
+            num_protection_sociale = st.slider("La Protection sociale", value=15, min_value=1, max_value=61, step=1, format="%d%%")
             num_autre = st.slider("Autre", value=39, min_value=38, max_value=40, step=1, format="%d%%")
         
         with col1:
@@ -168,42 +168,40 @@ with tab0:
     with tabr:
         st.header("Comparer les dépenses avec celles des états européens de [l'OCDE](https://fr.wikipedia.org/wiki/Organisation_de_coop%C3%A9ration_et_de_d%C3%A9veloppement_%C3%A9conomiques)", divider='gray')
         st.caption("Dépenses :euro:")
-        
-        import plotly.express as px
-        filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
-        filtered_df_depenses_annees = filtered_df_depenses[(df_depenses['Année'].isin(selected_year))]
-        df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[True,False,False]).query("Année==2021 & value>0") 
-
-
-        fig3 = px.treemap(filtered_df_depenses_annees ,
-                        path=["Année",'Pays','variable'], 
-                        values='value',color='variable', 
-                        color_discrete_map={'(?)':'lightgrey', 'Protection<br>sociale':'gold', 'Santé':'#a1ddd2',
-                                            'Services<br>publics':'','Education':'', 'Affaires<br>économiques':'',
-                                            'Ordre<br>public<br>et<br>sécurité':'','Défense':'','Habitat':'darkblue',
-                                            'Sports,<br>culture<br>et<br>religions':'',"Protection<br>de<br>l'environnement":'green' }
-                        #color_continuous_scale="Viridis",
-                        )
-
-        fig3.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
-        #fig3.update_traces(root_color="lightgrey")
-        fig3.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
-        fig3.update_layout(margin = dict(t=30, l=5, r=5, b=5))
-        #fig3.show()
-        st.plotly_chart(fig3, use_container_width=True)
-
-        st.write("Pas facile comme exercice. Un rappel des choix que tu as fait :")
-        coli, col0, col1, col2, col3 = st.columns([1,1,1,1,1])
-        with coli:
-            st.write("Autre : ", num_autre, "%")
+        col0, col1 = st.columns([1,3])
         with col0:
+            st.write("Pas facile comme exercice. Un rappel des choix que tu as fait :")
+            st.write("Autre : ", num_autre, "%")
             st.write("Habitat : ", num_habitat, "%")
-        with col1:
             st.write("Santé : ", num_sante, "%")
-        with col2:
             st.write("Protection de l'environnement : ", num_protection_env , "%")
-        with col3:
             st.write("Protection sociale : ", num_protection_sociale , "%")
+            
+        with col1:
+            import plotly.express as px
+            filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country))]
+            filtered_df_depenses_annees = filtered_df_depenses[(df_depenses['Année'].isin(selected_year))]
+            df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[True,False,False]).query("Année==2021 & value>0") 
+
+
+            fig3 = px.treemap(filtered_df_depenses_annees ,
+                            path=["Année",'Pays','variable'], 
+                            values='value',color='variable', 
+                            color_discrete_map={'(?)':'lightgrey', 'Protection<br>sociale':'gold', 'Santé':'#a1ddd2',
+                                                'Services<br>publics':'','Education':'', 'Affaires<br>économiques':'',
+                                                'Ordre<br>public<br>et<br>sécurité':'','Défense':'','Habitat':'darkblue',
+                                                'Sports,<br>culture<br>et<br>religions':'',"Protection<br>de<br>l'environnement":'green' }
+                            #color_continuous_scale="Viridis",
+                            )
+
+            fig3.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
+            #fig3.update_traces(root_color="lightgrey")
+            fig3.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
+            fig3.update_layout(margin = dict(t=30, l=5, r=5, b=5))
+            #fig3.show()
+            st.plotly_chart(fig3, use_container_width=True)
+
+        
         
         st.write("Si tu étais curieux de connaître le regroupement des autres dépenses passes la souris dessus ou clic pour agrandir la cellule.")
         #st.info("Chaque réaffectation du budget prends du temps pour en mesurer les impacts.")
