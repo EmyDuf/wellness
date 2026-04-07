@@ -312,7 +312,7 @@ with tab1:
                         'Surcharge financière liée au coût du logement': 1, 'Incapacité à maintenir le logement à bonne température': 2, 
                         'Ménages vivant dans des logements surpeuplés': 3, 'Ménages disposant d’un accès internet' : 4}
         ## Sorting the DataFrame using the key argument
-        df2 = filtered_df_wellness.sort_values(by=['Pays','Année'], ascending=[False,False]).query("Domaine =='Logement' & Année==2023") #.head(1) #| Année==2021")
+        df2 = filtered_df_wellness.sort_values(by=['Pays','Année'], ascending=[False,False]).query("Domaine =='Logement' & Année==2022") #.head(1) #| Année==2021")
         df2 = df2.sort_values(by=['Mesure'], key=lambda x: x.map(custom_order))
 
         col0, col1 = st.columns([1,4])
@@ -349,7 +349,7 @@ with tab1:
 
             #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
             #Graphique en 2022
-            fig1.update_layout(yaxis_title="Pourcentage en 2023") #xaxis_title=xaxis_title,
+            fig1.update_layout(yaxis_title="Pourcentage en 2022") #xaxis_title=xaxis_title,
             fig1.update_traces(mode="markers+lines")
             st.plotly_chart(fig1)
 
@@ -424,7 +424,7 @@ with tab2:
         #st.snow()
 
         ## Sorting the DataFrame using the key argument
-        df_wellness = df_wellness.sort_values(by=['Valeur_Mesurée', 'Pays','Année'], ascending=[False,False,False]).query("Domaine =='Logement' & Année==2023 & Mesure== 'Incapacité à maintenir le logement à bonne température'") #.head(1) #| Année==2021")
+        df_wellness = df_wellness.sort_values(by=['Valeur_Mesurée', 'Pays','Année'], ascending=[False,False,False]).query("Domaine =='Logement' & Année==2022 & Mesure== 'Incapacité à maintenir le logement à bonne température'") #.head(1) #| Année==2021")
         df_wellness = df_wellness.sort_values(by=['Mesure'], key=lambda x: x.map(custom_order))
 
         figf = px.scatter(
@@ -434,7 +434,7 @@ with tab2:
             hover_name="Pays", size_max=5,
             hover_data=["Domaine", "Valeur_Mesurée","Mesure", "Unité"]
         )
-        figf.update_layout(yaxis_title="Pourcentage en 2023") #xaxis_title=xaxis_title,
+        figf.update_layout(yaxis_title="Pourcentage en 2022") #xaxis_title=xaxis_title,
         figf.update_traces(marker_color="rgba(0,0,0,0)")
         figf.update_traces(line=dict(width=0.5)) #color="Black",
 
