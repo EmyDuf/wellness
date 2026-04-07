@@ -301,6 +301,7 @@ with tab1:
         st.text("Les états européens de l'OCDE consacrent entre 1 et 8 % pour l'Habitat. Et toi, que représente tes dépenses pour le logement ?")
         
         num_habitat_perso = st.slider("Que représente ton budget dédié à l'Habitat ?", value=2, min_value=0, max_value=100, step=1, format="%d%%")
+        st.text("N'oublies pas toutes les dépenses associées : **loyers** y compris les services divers, l'approvisionnement en **eau**, **l'électricité**, le gaz et autres combustibles, ainsi que les dépenses liées au mobilier, équipements ménagers, biens et services pour l’entretien courant de la maison, dépenses de réparation du logement, remboursements...")
         num_autre_perso = 100 - num_habitat_perso
         list_x = [num_habitat_perso, num_autre_perso]
         names = ['Habitat', "Autre"]
