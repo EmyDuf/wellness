@@ -420,7 +420,7 @@ with tab2:
         
         col0, col1 = st.columns([1,5])
         with col0:
-            st.markdown("<br> <br>", unsafe_allow_html=True)
+            st.markdown("<br> <br> <br>", unsafe_allow_html=True)
             st.info("Alors que le critère considère uniquement le maintien du logement au chaud, le top 4 comprend 3 pays au climat méditerranéen chaud : Grèce, Portugal, Espagne.")
 
             ## Sorting the DataFrame using the key argument
@@ -430,7 +430,8 @@ with tab2:
             figf = px.scatter(
                 df_wellness,
                 x="Pays", #size= 'Valeur_Mesurée', #size_max=25,
-                y="Valeur_Mesurée", color="Pays",height=500,width=800,
+                y="Valeur_Mesurée", #color="Pays",
+                #height=500,width=800,
                 size_max=5,
                 #hover_name="Pays",
                 #hover_data=["Valeur_Mesurée"]
