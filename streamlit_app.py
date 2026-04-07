@@ -117,8 +117,8 @@ tab0, tab1, tab2 = st.tabs([ "Dépenses","Bien-être","Habitat"])
 with tab0:
     tabq, tabr = st.tabs([ "Question","Réponse"])
     with tabq:
-        st.header("Glissez-vous dans la peau d'un expert comptable d'un pays.", divider='gray')
-        st.caption("La répartition des deniers publics implique une lourde responsabilité et des choix stratégiques difficiles. Essayez de faire varier les 4 catégories suivantes en restant sous la barre des 100% de l'enveloppe. Attention à la dette... :euro:")
+        st.header("Glissez-vous dans la peau de l'expert comptable de votre pays", divider='gray')
+        st.caption("La répartition des deniers publics implique une lourde responsabilité et des priorisations difficiles. Essayez de faire varier les 4 catégories suivantes en restant sous la barre des 100% de l'enveloppe. Attention à la dette... :euro:")
     
         col0, col1, col2 = st.columns([1,1,3])
         with col0:
@@ -221,7 +221,6 @@ with tab0:
         st.caption("Le budget est requestionné tous les an")
         import plotly.express as px
         #.query("Année==2003 |Année==2013 | Année==2023")
-        st.info("Le budget pour l'Habitat en Italie est passé de 1% en 2020 à 8% en 2023. Le budget Français de l'Habitat est assez constant avec environ 2 % depuis 20 ans.")
 
         fig0 = px.line(filtered_df_depenses,x="Année", y="value", color="variable", #barmode = 'group', cumulative = False, 
             facet_col="Pays", facet_col_wrap=4, #height=1000, title="df_depenses" #'group','overlay', 'relative' facet_col="variable", facet_col_wrap=2 .update_traces( marker={"color": "red"}, name='Pays', showlegend=True #name="red",
@@ -232,6 +231,7 @@ with tab0:
         )
         fig0.update_layout(xaxis_title="", yaxis_title="Pourcentage du budget")
         st.plotly_chart(fig0) #, use_container_width=True)
+        st.info("Le budget pour l'Habitat en Italie est passé de 1% en 2020 à 8% en 2023. Le budget Français de l'Habitat est assez constant avec environ 2 % depuis 20 ans.")
 
         #st.info("Chaque réaffectation du budget prends du temps pour en mesurer les impacts. En Italie un choix budgetaire fort a été porté sur l'Habitat.")
 
@@ -268,19 +268,24 @@ with tab1:
     tabq2, tabr2 = st.tabs([ "Question","Réponse"])
     #__________________________
     with tabq2:
-        st.header('Mesurer le Bien-être à grande échelle', divider='gray')
+        st.header("Bien-être dans l'habitat", divider='gray')
         st.caption("Question Habitat :smile: :house_with_garden: ")
         st.text("Les états européens de l'OCDE consacrent entre 1 et 8 % pour l'Habitat. Et toi, que représente tes dépenses pour le logement ?")
         
-        num_habitat_perso = st.slider("Que représente ton budget dédié à l'Habitat ?", value=2, min_value=0, max_value=100, step=1, format="%d%%")
-        st.write("N'oublies pas toutes les dépenses associées : **loyers** y compris les services divers, l'approvisionnement en **eau**, **l'électricité**, le gaz et autres combustibles, ainsi que les dépenses liées au mobilier, équipements ménagers, biens et services pour l’entretien courant de la maison, dépenses de réparation du logement, remboursements...")
-        num_autre_perso = 100 - num_habitat_perso
-        list_x = [num_habitat_perso, num_autre_perso]
-        names = ['Habitat', "Autre"]
-        fig_p_perso = px.pie(values=list_x, names=names,color =names , color_discrete_map={'Autre':'lightgrey', 
+        col0, col1 = st.columns([1,3])
+        with col0:
+            num_habitat_perso = st.slider("Que représente ton budget dédié à l'Habitat ?", value=2, min_value=0, max_value=100, step=1, format="%d%%")
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.write("N'oublies pas toutes les dépenses associées : **loyers** y compris les services divers, l'approvisionnement en **eau**, **l'électricité**, le gaz et autres combustibles, ainsi que les dépenses liées au mobilier, équipements ménagers, biens et services pour l’entretien courant de la maison, dépenses de réparation du logement, remboursements...")
+
+        with col1:
+            num_autre_perso = 100 - num_habitat_perso
+            list_x = [num_habitat_perso, num_autre_perso]
+            names = ['Habitat', "Autre"]
+            fig_p_perso = px.pie(values=list_x, names=names,color =names , color_discrete_map={'Autre':'lightgrey', 
                                             'Habitat':'darkblue', })
-        fig_p_perso.update_traces(textposition='inside', textinfo='label+percent') #value
-        st.plotly_chart(fig_p_perso)
+            fig_p_perso.update_traces(textposition='inside', textinfo='label+percent') #value
+            st.plotly_chart(fig_p_perso)
     
     #__________________________
     with tabr2:
@@ -339,7 +344,7 @@ with tab1:
 
             #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
             #Graphique en 2022
-            fig1.update_layout(yaxis_title="Pourcentage en 2022") #xaxis_title=xaxis_title,
+            fig1.update_layout(xaxis_title="",yaxis_title="Pourcentage en 2022") #xaxis_title=xaxis_title,
             fig1.update_traces(mode="markers+lines")
             st.plotly_chart(fig1)
 
