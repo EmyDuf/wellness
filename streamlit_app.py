@@ -88,7 +88,7 @@ df_depenses = get_data_depenses()
 #    value=[min_value_debit, max_value_debit],max_value=max_value_debit)
 
 st.sidebar.title('Le bien-être')
-st.sidebar.image('./img/5.svg')
+st.sidebar.image('./img/7_v2.svg')
 
 # Filter année
 year2 = df_wellness['Année'].unique()
@@ -116,25 +116,52 @@ with tab0:
     tabq, tabr = st.tabs([ "Question","Réponse"])
     with tabq:
         st.header("Félicitation pour vos nouvelles responsabilités d'expert comptable du pays.", divider='gray')
-        st.caption("Cela implique de lourde responsabilités et des choix stratégiques à défendre : Comment souhaitez-vous répartir les deniers publics ? :euro:")
+        st.caption("La répartition des deniers publics implique une lourde responsabilité et des choix stratégiques difficiles. Faites varier le pourcentage des 4 catégories suivantes sans dépasser 100% de l'enveloppe. Attention à la dette... :euro:")
     
+        #def update (change):
+        #    if change == 'x1':
+        #        st.session_state.x2 = st.session_state.x1 / 2
+        #        st.session_state.x3 = st.session_state.x1 / 2
+        #    else:
+        #        st.session_state.x1 = st.session_state.x2 + st.session_state.x3
+
+        #st.slider('x1', value=2, key='x1', on_change=update, args=('x1',))
+        #st.slider('x2', value=1, key='x2', on_change=update, args=('x2',))
+        #st.slider('x3', value=1, key='x3', on_change=update, args=('x3',))
+        #def update (change):
+        #    if change == 'num_habitat':
+        #        ok=1
+                #st.session_state.x2 = st.session_state.x1 / 2
+                #st.session_state.x3 = st.session_state.x1 / 2
+            #else:
+                #st.session_state.x1 = st.session_state.x2 + st.session_state.x3
+
+
         coli, col0, col1, col2, col3 = st.columns([1,1,1,1,1])
         with coli:
-            st.image('./img/7_v2.svg')
+            num_autre = st.slider("Autre", value=39, min_value=38, max_value=40, step=1, format="%d%%")
         with col0:
-            num_habitat = st.slider("Quel pourcentage des dépenses faut-il allouer à l'Habitat ? :", value=15, min_value=1, max_value=100)
+            num_habitat = st.slider("Quel pourcentage des dépenses faut-il allouer à l'Habitat ?", value=15, min_value=1, max_value=61, step=1, format="%d%%")
         with col1:
-            num_sante = st.slider("Santé", value=15, min_value=num_habitat, max_value=100, step=1)
+            num_sante = st.slider("Santé", value=15, min_value=1, max_value=61, step=1, format="%d%%")
         with col2:
-            num_protection_env = st.slider("Protection de l'environnement", value=15, min_value=num_sante, max_value=100, step=1)
+            num_protection_env = st.slider("Protection de l'environnement", value=15, min_value=1, max_value=61, step=1, format="%d%%")
         with col3:
-            num_protection_sociale = st.slider("Protection sociale", value=15, min_value=num_protection_env, max_value=100, step=1)
-        num_autre = 39 #100 - num_habitat - num_sante - num_protection_env - num_protection_sociale
+            num_protection_sociale = st.slider("Protection sociale", value=15, min_value=1, max_value=61, step=1, format="%d%%")
+
+        #Limit to 100%
+        max = 100
+        #100 - num_habitat - num_sante - num_protection_env - num_protection_sociale
+        sum_pct = num_habitat + num_sante + num_protection_env + num_protection_sociale + num_autre
+        st.write(sum_pct) 
+        st.text('%')
+        if sum_pct >100:
+            st.text('Attention, vous êtes trop dépensier. Vous devez réduire les dépenses en dessous de 100 %...')
 
         list_x = [num_habitat, num_sante, num_protection_env, num_protection_sociale, num_autre]
         names = ['Habitat', 'Santé', "Protection de l'environnement", "Protection sociale", "Autre"]
-        df_t = pd.DataFrame({'Pourcentage': list_x,'Dépense': names,})
 
+        df_t = pd.DataFrame({'Pourcentage': list_x,'Dépense': names,})
         fig_t = px.treemap(df_t, path=["Dépense"], values="Pourcentage",color="Dépense", 
                         color_discrete_map={'Autre':'lightgrey', 'Protection sociale':'gold', 'Santé':'#a1ddd2',
                                             'Habitat':'darkblue',
@@ -181,7 +208,27 @@ with tab0:
         #fig3.show()
         st.plotly_chart(fig3, use_container_width=True)
 
-        st.button("L'année est les catégories sont triées de la gauche vers la droite, de la plus grande valeur à la plus petite.")
+        st.write("Pas facile comme exercice. Un rappel des choix que tu as fait :")
+        coli, col0, col1, col2, col3 = st.columns([1,1,1,1,1])
+        with coli:
+            st.write("Autre :")
+            st.text(num_autre)
+        with col0:
+            st.write("Habitat :")
+            st.text(num_habitat)
+        with col1:
+            st.write("Santé :")
+            st.text(num_sante)
+        with col2:
+            st.write("Protection de l'environnement :")
+            st.text(num_protection_env)
+        with col3:
+            st.write("Protection sociale :")
+            st.text(num_protection_sociale)
+        
+        st.write("Si tu étais curieux de connaître le regroupement des autres dépenses passes la souris dessus ou clic pour agrandir la cellule.")
+
+        st.info("Tu as la possibilité dans le bandeau à gauche d'ajouter des années ou des pays. Pour faciliter la lecture les années et les catégories sont triées de la gauche vers la droite, de la plus grande valeur à la plus petite.")
 
         
         #filtered_df_depenses_show=filtered_df_depenses
@@ -206,7 +253,7 @@ with tab1:
     )
     st.plotly_chart(fig0) #, use_container_width=True)
 
-    st.info('Info message')
+    st.info('Info sur les tendances')
 
 
 with tab2:
