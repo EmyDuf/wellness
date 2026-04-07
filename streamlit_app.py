@@ -261,7 +261,7 @@ with tab0:
         )
         st.plotly_chart(fig0) #, use_container_width=True)
 
-        st.info('Chaque réaffectation du budget prends du temps pour en mesurer les impacts. En Italie un choix budgetaire fort a été porté sur l'Habitat.')
+        st.info("Chaque réaffectation du budget prends du temps pour en mesurer les impacts. En Italie un choix budgetaire fort a été porté sur l'Habitat.")
 
 
     #with tab2:
