@@ -110,7 +110,7 @@ selected_country = st.sidebar.multiselect('Quel pays souhaitez-vous analyser ?',
        #'Italie', 'Lettonie', 'Estonie', 'République slovaque', 'Grèce'],
 
 #st.title('Split steps of the story')
-tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs([ "Dépenses","Dépenses Habitat","Mesurer le bien être","Bien-être Habitat","_","Froid"])
+tab0, tab1, tab2, tab3 = st.tabs([ "Dépenses","Dépenses Habitat","Mesurer le bien être","Incapacité à chauffer"])
 
 with tab0:
     tabq, tabr = st.tabs([ "Question","Réponse"])
@@ -183,7 +183,7 @@ with tab0:
         #st.plotly_chart(fig_p)
 
     with tabr:
-        st.header('Dépenses', divider='gray')
+        st.header("Comparer les dépenses avec celles des états européens de [l'OCDE](https://fr.wikipedia.org/wiki/Organisation_de_coop%C3%A9ration_et_de_d%C3%A9veloppement_%C3%A9conomiques)", divider='gray')
         st.caption("Dépenses :euro:")
         
         import plotly.express as px
@@ -256,34 +256,34 @@ with tab1:
     st.info('Info sur les tendances')
 
 
+    #with tab2:
+    #    st.header('Bien-être', divider='gray')
+    #    st.caption("Bien-être par échelle :smile: ")
+
+    #    # Insert a chat message container.
+    #    with st.chat_message("user"):
+    #        st.write("Hello 👋")
+    #        #Scatter doubler les graphiques
+    #        import plotly.express as px
+    #        #fig = px.line(df_depenses_euro[df_depenses_euro['Dépense'].str.contains("ogement")].query("Montant>0 "), x="Année", y="Montant", color="Dépense",#size="Valeur_Mesurée", & Dépense=='Accessibilité financière du logement'
+    #        #            hover_data=["Opération","Cde_Dépense","Dépense"], #size="Valeur_Mesurée", 
+    #        #                #animation_frame="Année",facet_row ="Cde_Mesure",color_continuous_scale='RdBu',
+    #        #                facet_col ="Opération", facet_col_wrap=2,height=800,
+    #        #                title="Dépense'", #facet_row ="Unité", height=700
+    #        #                ) #,  height=700) #width=800, facet_row="Pays",facet_col="Mesure", 
+    #        #fig.show()
+    #        #fig.show(autorange= 'True')
+    #        #fig.update_xaxes(rangeslider_visible=True )
+    #        st.line_chart(np.random.randn(30, 3))
+
+    #        # Display a chat input widget.
+    #        st.chat_input("Say something") 
+
+    #    #st.radio('Selectionner', options=[1,2,3,4,5])
+    #    st.slider('Slide me', min_value=0, max_value=10)
+
+
 with tab2:
-    st.header('Bien-être', divider='gray')
-    st.caption("Bien-être par échelle :smile: ")
-
-    # Insert a chat message container.
-    with st.chat_message("user"):
-        st.write("Hello 👋")
-        #Scatter doubler les graphiques
-        import plotly.express as px
-        #fig = px.line(df_depenses_euro[df_depenses_euro['Dépense'].str.contains("ogement")].query("Montant>0 "), x="Année", y="Montant", color="Dépense",#size="Valeur_Mesurée", & Dépense=='Accessibilité financière du logement'
-        #            hover_data=["Opération","Cde_Dépense","Dépense"], #size="Valeur_Mesurée", 
-        #                #animation_frame="Année",facet_row ="Cde_Mesure",color_continuous_scale='RdBu',
-        #                facet_col ="Opération", facet_col_wrap=2,height=800,
-        #                title="Dépense'", #facet_row ="Unité", height=700
-        #                ) #,  height=700) #width=800, facet_row="Pays",facet_col="Mesure", 
-        #fig.show()
-        #fig.show(autorange= 'True')
-        #fig.update_xaxes(rangeslider_visible=True )
-        st.line_chart(np.random.randn(30, 3))
-
-        # Display a chat input widget.
-        st.chat_input("Say something") 
-
-    #st.radio('Selectionner', options=[1,2,3,4,5])
-    st.slider('Slide me', min_value=0, max_value=10)
-
-
-with tab3:
     st.header('Bien-être Habitat', divider='gray')
     st.caption("Bien-être de l'habitat en 2022 :smile: :house_with_garden: ")
 
@@ -381,23 +381,23 @@ with tab3:
     #    placeholder.write("Accessibilité financière du logement") # Display content
 
 
-with tab4:
-    st.header('Température du logement', divider='gray')
-    st.caption("Incapacité à maintenir le logement à bonne température ")
-    #Scatter doubler les graphiques .query("Valeur_Mesurée>0")
-    import plotly.express as px
-    
-    filtered_df_wellness = df_wellness[(df_wellness['Pays'].isin(selected_country))]
-    fig_w = px.scatter(filtered_df_wellness[filtered_df_wellness['Domaine'].str.contains("ogement")].sort_values(by=['Année','Valeur_Mesurée','Pays'], ascending=[True,False,False]), #.query("Année>2011 & Année<=2022"), 
-                    y="Valeur_Mesurée", x="Pays", size="Valeur_Mesurée", color="Cde_Mesure", hover_data=["Cde_Mesure","Unité"], #size="Valeur_Mesurée", 
-                    animation_frame="Année",
-                    size_max=20, title="Bien être",  #facet_row ="Unité", height=700
-                    ) #,  height=700) #width=800, facet_row="Pays",facet_col="Mesure", 
-    st.plotly_chart(fig_w)
-    #fig.show(autorange= 'True')
-    #fig.update_xaxes(rangeslider_visible=True )
+    #with tab3:
+    #    st.header('Température du logement', divider='gray')
+    #    st.caption("Incapacité à maintenir le logement à bonne température ")
+    #    #Scatter doubler les graphiques .query("Valeur_Mesurée>0")
+    #    import plotly.express as px
+        
+    #    filtered_df_wellness = df_wellness[(df_wellness['Pays'].isin(selected_country))]
+    #    fig_w = px.scatter(filtered_df_wellness[filtered_df_wellness['Domaine'].str.contains("ogement")].sort_values(by=['Année','Valeur_Mesurée','Pays'], ascending=[True,False,False]), #.query("Année>2011 & Année<=2022"), 
+    #                    y="Valeur_Mesurée", x="Pays", size="Valeur_Mesurée", color="Cde_Mesure", hover_data=["Cde_Mesure","Unité"], #size="Valeur_Mesurée", 
+    #                    animation_frame="Année",
+    #                    size_max=20, title="Bien être",  #facet_row ="Unité", height=700
+    #                    ) #,  height=700) #width=800, facet_row="Pays",facet_col="Mesure", 
+    #    st.plotly_chart(fig_w)
+        #fig.show(autorange= 'True')
+        #fig.update_xaxes(rangeslider_visible=True )
 
-with tab5:
+with tab3:
     st.header('Température du logement', divider='gray')
     st.caption("Incapacité à maintenir le logement à bonne température ")
     #st.snow()
