@@ -418,8 +418,9 @@ with tab2:
         st.header('Température du logement', divider='gray')
         st.caption("Incapacité à maintenir le logement à bonne température ")
         
-        col0, col1 = st.columns([1,4])
+        col0, col1 = st.columns([1,5])
         with col0:
+            st.markdown("<br> <br>", unsafe_allow_html=True)
             st.info("Alors que le critère considère uniquement le maintien du logement au chaud, le top 4 comprend 3 pays au climat méditerranéen chaud : Grèce, Portugal, Espagne.")
 
             ## Sorting the DataFrame using the key argument
@@ -430,8 +431,9 @@ with tab2:
                 df_wellness,
                 x="Pays", #size= 'Valeur_Mesurée', #size_max=25,
                 y="Valeur_Mesurée", color="Pays",height=500,width=800,
-                hover_name="Pays", size_max=5,
-                hover_data=["Valeur_Mesurée"]
+                size_max=5,
+                #hover_name="Pays",
+                #hover_data=["Valeur_Mesurée"]
             )
             figf.update_layout(yaxis_title="Pourcentage en 2022") #xaxis_title=xaxis_title,
             figf.update_traces(marker_color="rgba(0,0,0,0)")
@@ -457,4 +459,6 @@ with tab2:
             figf.update_traces(mode="markers+lines")
             st.plotly_chart(figf)
 
-        st.text("Cet indicateur reflète une conséquence de la précarité énergétique, sans toutefois expliquer les causes possibles de l'incapacité à maintenir une température adéquate, qu'elles soient économiques (prix de l'énergie, manque de ressources, …), liées aux caractéristiques du bâtiment (efficacité énergétique, manque d'équipements) ou autres. Les caractéristiques sociales et culturelles des ménages influencent fortement la déclaration d'incapacité à chauffer adéquatement son logement, et le niveau de température adéquate peut varier d'un pays à l'autre. Enfin, les personnes en situation de précarité énergétique peuvent nier se considérer comme étant dans une situation inconfortable et, par conséquent, ne pas le déclarer (également appelé « biais de déni de réalité »).")
+        st.markdown("Cet indicateur reflète une conséquence de la **précarité énergétique**, sans toutefois expliquer les causes possibles de l'incapacité à maintenir une température adéquate, qu'elles soient **économiques** *(prix de l'énergie, manque de ressources...)*, liées aux **caractéristiques du bâtiment** (efficacité énergétique, manque d'équipements) ou autres. Les caractéristiques **sociales** et **culturelles** des ménages influencent fortement la déclaration d'incapacité à chauffer adéquatement son logement, et le **niveau de température adéquate peut varier d'un pays à l'autre**.")
+
+        st.info("Attention le biais de déni de réalité implique que des personnes en situation de précarité énergétique peuvent nier se considérer comme étant dans une situation inconfortable et, par conséquent, ne pas le déclarer.")
