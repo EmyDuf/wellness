@@ -111,7 +111,7 @@ tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs([ "Dépenses","Dépenses Habitat","
 
 with tab0:
     st.header('Dépenses', divider='gray')
-    st.caption("Dépenses :money:")
+    st.caption("Dépenses :euro:")
     
     import plotly.express as px
     filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country)) & (df_depenses['Année'].isin(selected_year))]
@@ -209,40 +209,45 @@ with tab3:
     df2 = filtered_df_wellness.sort_values(by=['Pays','Année'], ascending=[False,False]).query("Domaine =='Logement' & Année==2022") #.head(1) #| Année==2021")
     df2 = df2.sort_values(by=['Mesure'], key=lambda x: x.map(custom_order))
 
-    fig1 = px.line(
-        df2,
-        x="Mesure", #size= 'Valeur_Mesurée', #size_max=25,
-        y="Valeur_Mesurée", color="Pays",height=500,width=800,
-        hover_name="Pays", #size_max=20,
-        hover_data=["Domaine", "Valeur_Mesurée","Mesure", "Unité"]
-    )
-
-    fig1.update_traces(marker_color="rgba(0,0,0,0)")
-    fig1.update_traces(line=dict(width=0.5)) #color="Black",
-
-
-    #maxDim = df2[["Mesure", "Valeur_Mesurée"]].max().idxmax()
-    #maxi = df2[maxDim].max()
-    for i, row in df2.iterrows():
-        country = row['Cde_Pays'] #.replace(" ", "-")
-        fig1.add_layout_image(
-            dict(source=Image.open(f"flag/{country}.png"),
-                xref="x", yref="y",
-                xanchor="center", yanchor="middle",
-                x=row["Mesure"], y=row["Valeur_Mesurée"],
-                sizex=7,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
-                sizey=7,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
-                sizing="contain", opacity=0.8, layer="above"
-            )
+    col0, col1 = st.columns([1,4])
+    with col0:
+        st.write("\n_ \n_")
+        st.image('./img/6.svg')  
+    with col1:
+        fig1 = px.line(
+            df2,
+            x="Mesure", #size= 'Valeur_Mesurée', #size_max=25,
+            y="Valeur_Mesurée", color="Pays",height=500,width=800,
+            hover_name="Pays", #size_max=20,
+            hover_data=["Domaine", "Valeur_Mesurée","Mesure", "Unité"]
         )
 
-    #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
-    fig1.update_traces(mode="markers+lines")
-    st.plotly_chart(fig1)
+        fig1.update_traces(marker_color="rgba(0,0,0,0)")
+        fig1.update_traces(line=dict(width=0.5)) #color="Black",
+
+
+        #maxDim = df2[["Mesure", "Valeur_Mesurée"]].max().idxmax()
+        #maxi = df2[maxDim].max()
+        for i, row in df2.iterrows():
+            country = row['Cde_Pays'] #.replace(" ", "-")
+            fig1.add_layout_image(
+                dict(source=Image.open(f"flag/{country}.png"),
+                    xref="x", yref="y",
+                    xanchor="center", yanchor="middle",
+                    x=row["Mesure"], y=row["Valeur_Mesurée"],
+                    sizex=7,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
+                    sizey=7,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
+                    sizing="contain", opacity=0.8, layer="above"
+                )
+            )
+
+        #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
+        fig1.update_traces(mode="markers+lines")
+        st.plotly_chart(fig1)
 
     #st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement")
     
-    col1, col2, col3, col4 = st.columns(4)
+    col0, col1, col2, col3, col4 = st.columns([1,1,1,1,1])
     col1.write('**Accessibilité financière du logement**')
     col2.write('**Surcharge financière lié au coût du logement**')
     col3.write('**Incapacité à maintenir le logement à bonne température**')
@@ -255,8 +260,11 @@ with tab3:
     col2.write("*Pourcentage de la population dans la tranche inférieure de 40 % de la répartition des revenus consacrant plus de 40 % de leur revenu disponible aux frais de logement.*")
     col3.write("*Pourcentage de ménages déclarant qu'ils n'ont pas les moyens de chauffer adéquatement leur logement.*")
     col4.write("*Pourcentage de ménages vivant dans des logements surpeuplés.*")
-                
+
+          
     # Using 'with' notation:
+    with col0:
+        st.write("")
     with col1:
         st.write("L’accessibilité financière du logement fait référence au pourcentage du revenu disponible brut ajusté du ménage qui reste disponible pour le ménage après déduction des coûts de logement. Les coûts de logement comprennent le loyer (y compris les loyers imputés pour les logements détenus par leurs propriétaires occupants) et l'entretien (dépenses de réparation du logement, y compris les services divers, l'approvisionnement en eau, l'électricité, le gaz et autres combustibles, ainsi que les dépenses liées au mobilier, à l'ameublement, équipements ménagers et biens et services pour l’entretien courant de la maison).")
         #Les données proviennent de la base de données des comptes nationaux de l'OCDE et concernent à la fois les ménages et les institutions sans but lucratif au service des ménages. Les pays utilisant actuellement la version COICOP 2018 des dépenses de consommation finale annuelle des ménages comprennent l'Autriche, la Belgique, la Bulgarie, la République tchèque, le Danemark, l'Estonie, la France, l'Allemagne, la Hongrie, l'Irlande, l'Italie, la Corée, la Lettonie, la Lituanie, les Pays-Bas, le Portugal, la Slovénie et l'Espagne et la Suède.
