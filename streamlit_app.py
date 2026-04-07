@@ -88,7 +88,7 @@ df_depenses = get_data_depenses()
 #    value=[min_value_debit, max_value_debit],max_value=max_value_debit)
 
 st.sidebar.title('Le bien-être')
-st.sidebar.image('./img/7_v2.svg')
+st.sidebar.image('./img/5.svg')
 
 # Filter année
 year2 = df_wellness['Année'].unique()
@@ -117,8 +117,10 @@ with tab0:
     with tabq:
         st.header("Félicitation pour vos nouvelles responsabilités d'expert comptable du pays.", divider='gray')
         st.caption("Cela implique de lourde responsabilités et des choix stratégiques à défendre : Comment souhaitez-vous répartir les deniers publics ? :euro:")
-        st.sidebar.image('./img/7_v2.svg')
-        col0, col1, col2, col3 = st.columns([1,1,1,1])
+    
+        coli, col0, col1, col2, col3 = st.columns([1,1,1,1,1])
+        with coli:
+            st.image('./img/7_v2.svg')
         with col0:
             num_habitat = st.slider("Quel pourcentage des dépenses faut-il allouer à l'Habitat ? :", value=15, min_value=1, max_value=100)
         with col1:
@@ -146,20 +148,6 @@ with tab0:
         fig_t.update_layout(margin = dict(t=30, l=5, r=5, b=5))
         #fig3.show()
         st.plotly_chart(fig_t, use_container_width=True)
-
-        import streamlit as st
-        import streamlit_vertical_slider  as svs
-        import streamlit_toggle as sts
-
-        svs.vertical_slider(key=key, 
-                            default_value=i[1], 
-                            step=1, 
-                            min_value=0, 
-                            max_value=100,
-                            #slider_color= 'green' #optional
-                            #track_color='lightgray' #optional
-                            thumb_color = 'red' #optional
-                            )
 
         #fig_p = px.pie(values=list_x, names=names,color =names , color_discrete_map={'Autre':'lightgrey', 'Protection sociale':'gold', 'Santé':'#a1ddd2',
         #                                    'Habitat':'darkblue',
