@@ -149,6 +149,7 @@ with tab0:
 
         import streamlit as st
         import streamlit_vertical_slider  as svs
+        import streamlit_toggle as sts
 
         svs.vertical_slider(key=key, 
                             default_value=i[1], 
