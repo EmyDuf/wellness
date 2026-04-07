@@ -461,4 +461,4 @@ with tab2:
 
         st.markdown("Cet indicateur reflète une conséquence de la **précarité énergétique**, sans toutefois expliquer les causes possibles de l'incapacité à maintenir une température adéquate, qu'elles soient **économiques** *(prix de l'énergie, manque de ressources...)*, liées aux **caractéristiques du bâtiment** (efficacité énergétique, manque d'équipements) ou autres. Les caractéristiques **sociales** et **culturelles** des ménages influencent fortement la déclaration d'incapacité à chauffer adéquatement son logement, et le **niveau de température adéquate peut varier d'un pays à l'autre**.")
 
-        st.info("Attention le biais de déni de réalité implique que des personnes en situation réelle de précarité énergétique peuvent nier cette situation d'inconfort.")
+        st.info("Attention, le **biais de déni de réalité** implique que des personnes en situation réelle de précarité énergétique peuvent nier cette situation d'inconfort.")
