@@ -8,3 +8,4 @@ geopandas==1.0.1
 #plotly_calplot
 #streamlit_pannellum
 #mpl-chord-diagram
+streamlit_vertical_slider

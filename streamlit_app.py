@@ -87,6 +87,9 @@ df_depenses = get_data_depenses()
 #    min_value=max_value_debit,
 #    value=[min_value_debit, max_value_debit],max_value=max_value_debit)
 
+st.sidebar.title('Le bien-être')
+st.sidebar.image('./img/7_v2.svg')
+
 # Filter année
 year2 = df_wellness['Année'].unique()
 if not len(year2):
@@ -110,41 +113,95 @@ selected_country = st.sidebar.multiselect('Quel pays souhaitez-vous analyser ?',
 tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs([ "Dépenses","Dépenses Habitat","Mesurer le bien être","Bien-être Habitat","_","Froid"])
 
 with tab0:
-    st.header('Dépenses', divider='gray')
-    st.caption("Dépenses :euro:")
-    
-    import plotly.express as px
-    filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country)) & (df_depenses['Année'].isin(selected_year))]
-    df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[True,False,False]).query("Année==2021 & value>0") 
+    tabq, tabr = st.tabs([ "Question","Réponse"])
+    with tabq:
+        st.header("Félicitation pour vos nouvelles responsabilités d'expert comptable du pays.", divider='gray')
+        st.caption("Cela implique de lourde responsabilités et des choix stratégiques à défendre : Comment souhaitez-vous répartir les deniers publics ? :euro:")
+        st.sidebar.image('./img/7_v2.svg')
+        col0, col1, col2, col3 = st.columns([1,1,1,1])
+        with col0:
+            num_habitat = st.slider("Quel pourcentage des dépenses faut-il allouer à l'Habitat ? :", value=15, min_value=1, max_value=100)
+        with col1:
+            num_sante = st.slider("Santé", value=15, min_value=num_habitat, max_value=100, step=1)
+        with col2:
+            num_protection_env = st.slider("Protection de l'environnement", value=15, min_value=num_sante, max_value=100, step=1)
+        with col3:
+            num_protection_sociale = st.slider("Protection sociale", value=15, min_value=num_protection_env, max_value=100, step=1)
+        num_autre = 39 #100 - num_habitat - num_sante - num_protection_env - num_protection_sociale
+
+        list_x = [num_habitat, num_sante, num_protection_env, num_protection_sociale, num_autre]
+        names = ['Habitat', 'Santé', "Protection de l'environnement", "Protection sociale", "Autre"]
+        df_t = pd.DataFrame({'Pourcentage': list_x,'Dépense': names,})
+
+        fig_t = px.treemap(df_t, path=["Dépense"], values="Pourcentage",color="Dépense", 
+                        color_discrete_map={'Autre':'lightgrey', 'Protection sociale':'gold', 'Santé':'#a1ddd2',
+                                            'Habitat':'darkblue',
+                                            "Protection de l'environnement":'green' }
+                        #color_continuous_scale="Viridis",
+                        )
+
+        fig_t.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
+        #fig3.update_traces(root_color="lightgrey")
+        fig_t.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
+        fig_t.update_layout(margin = dict(t=30, l=5, r=5, b=5))
+        #fig3.show()
+        st.plotly_chart(fig_t, use_container_width=True)
+
+        import streamlit as st
+        import streamlit_vertical_slider  as svs
+
+        svs.vertical_slider(key=key, 
+                            default_value=i[1], 
+                            step=1, 
+                            min_value=0, 
+                            max_value=100,
+                            #slider_color= 'green' #optional
+                            #track_color='lightgray' #optional
+                            thumb_color = 'red' #optional
+                            )
+
+        #fig_p = px.pie(values=list_x, names=names,color =names , color_discrete_map={'Autre':'lightgrey', 'Protection sociale':'gold', 'Santé':'#a1ddd2',
+        #                                    'Habitat':'darkblue',
+        #                                    "Protection de l'environnement":'green' })
+        #fig_p.update_traces(textposition='inside', textinfo='label+percent') #value
+        #st.plotly_chart(fig_p)
+
+    with tabr:
+        st.header('Dépenses', divider='gray')
+        st.caption("Dépenses :euro:")
+        
+        import plotly.express as px
+        filtered_df_depenses = df_depenses[(df_depenses['Pays'].isin(selected_country)) & (df_depenses['Année'].isin(selected_year))]
+        df3 = filtered_df_depenses.sort_values(by=['Année','variable','Pays'], ascending=[True,False,False]).query("Année==2021 & value>0") 
 
 
-    fig3 = px.treemap(filtered_df_depenses ,
-                    path=["Année",'Pays','variable'], 
-                    values='value',color='variable', 
-                    color_discrete_map={'(?)':'lightgrey', 'Protection<br>sociale':'gold', 'Santé':'#a1ddd2',
-                                        'Services<br>publics':'','Education':'', 'Affaires<br>économiques':'',
-                                        'Ordre<br>public<br>et<br>sécurité':'','Défense':'','Habitat':'darkblue',
-                                        'Sports,<br>culture<br>et<br>religions':'',"Protection<br>de<br>l'environnement":'green' }
-                    #color_continuous_scale="Viridis",
-                    )
+        fig3 = px.treemap(filtered_df_depenses ,
+                        path=["Année",'Pays','variable'], 
+                        values='value',color='variable', 
+                        color_discrete_map={'(?)':'lightgrey', 'Protection<br>sociale':'gold', 'Santé':'#a1ddd2',
+                                            'Services<br>publics':'','Education':'', 'Affaires<br>économiques':'',
+                                            'Ordre<br>public<br>et<br>sécurité':'','Défense':'','Habitat':'darkblue',
+                                            'Sports,<br>culture<br>et<br>religions':'',"Protection<br>de<br>l'environnement":'green' }
+                        #color_continuous_scale="Viridis",
+                        )
 
-    fig3.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
-    #fig3.update_traces(root_color="lightgrey")
-    fig3.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
-    fig3.update_layout(margin = dict(t=30, l=5, r=5, b=5))
-    #fig3.show()
-    st.plotly_chart(fig3, use_container_width=True)
+        fig3.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
+        #fig3.update_traces(root_color="lightgrey")
+        fig3.update_traces(textfont=dict(size=20),marker=dict(cornerradius=5))
+        fig3.update_layout(margin = dict(t=30, l=5, r=5, b=5))
+        #fig3.show()
+        st.plotly_chart(fig3, use_container_width=True)
 
-    st.button("L'année est les catégories sont triées de la gauche vers la droite, de la plus grande valeur à la plus petite.")
+        st.button("L'année est les catégories sont triées de la gauche vers la droite, de la plus grande valeur à la plus petite.")
 
-    
-    #filtered_df_depenses_show=filtered_df_depenses
-    #filtered_df_depenses_show['variable'] = filtered_df_depenses_show['variable'].str.replace('<br>',' ')
-    #st.dataframe(
-    #    filtered_df_depenses_show,
-    #    use_container_width=True,
-    #    #column_config={"code_crue": st.column_config.TextColumn("code_crue")},
-    #)
+        
+        #filtered_df_depenses_show=filtered_df_depenses
+        #filtered_df_depenses_show['variable'] = filtered_df_depenses_show['variable'].str.replace('<br>',' ')
+        #st.dataframe(
+        #    filtered_df_depenses_show,
+        #    use_container_width=True,
+        #    #column_config={"code_crue": st.column_config.TextColumn("code_crue")},
+        #)
 
 with tab1:
     st.header('Dépenses', divider='gray')
