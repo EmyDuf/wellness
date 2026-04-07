@@ -358,7 +358,7 @@ with tab1:
         #col2.write('**Surcharge financière lié au coût du logement**')
         #col3.write('**Incapacité à maintenir le logement à bonne température**')
         #col4.write('**Taux de surpeuplement**')
-        
+
         # Three columns with different widths
         #col1, col2, col3, col4 = st.columns([4,1,1])
         # col1 is wider
@@ -383,7 +383,7 @@ with tab1:
             st.write("Ne pas avoir les moyens de maintenir le logement suffisamment au chaud dans le logement (précarité énergétique).")
             #Les données proviennent d'estimations fournies par les offices statistiques nationaux par le biais des Statistiques de l'Union européenne sur les revenus et les conditions de vie, une enquête représentative au niveau national avec de grands échantillons (d'environ 4 000 individus dans les plus petits États membres à environ 16 000 dans le plus grand) couvrant tous les membres des ménages privés âgés de 16 ans ou plus et disponible pour les pays de l'UE, ainsi que pour la Norvège et la Suisse.
         with col4:
-            st.markdown("<br> <br>", unsafe_allow_html=True)
+            #st.markdown("<br>", unsafe_allow_html=True)
             st.image('./img/surpeuples.svg')
             st.write("Espace de vie non respecté selon l'âge et la composition du ménage : si moins d'une pièce disponible pour chaque couple du ménage, chaque personne seule âgée de 18 ans ou plus, ... ")
             #Les données proviennent de la base de données de l'OCDE sur le logement abordable, qui utilise les données d'enquêtes auprès des ménages. Au Chili, au Mexique, au Danemark, aux Pays-Bas et aux États-Unis, aucune donnée n’est disponible concernant les locataires subventionnés.
