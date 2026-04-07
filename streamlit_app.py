@@ -231,6 +231,7 @@ with tab0:
             st.text(num_protection_sociale)
         
         st.write("Si tu étais curieux de connaître le regroupement des autres dépenses passes la souris dessus ou clic pour agrandir la cellule.")
+        st.info("Chaque réaffectation du budget prends du temps pour en mesurer les impacts. En Italie un choix budgetaire fort a été porté sur l'Habitat.")
 
         st.info("Tu as la possibilité dans le bandeau à gauche d'ajouter des années ou des pays. Pour faciliter la lecture les années et les catégories sont triées de la gauche vers la droite, de la plus grande valeur à la plus petite.")
 
@@ -243,21 +244,23 @@ with tab0:
         #    #column_config={"code_crue": st.column_config.TextColumn("code_crue")},
         #)
 
-    #__________________________
-    st.header('Dépenses dans le temps', divider='gray')
-    st.caption("Le budget est requestionné tous les an")
-    import plotly.express as px
-    #.query("Année==2003 |Année==2013 | Année==2023")
-    fig0 = px.line(filtered_df_depenses,x="Année", y="value", color="variable", #barmode = 'group', cumulative = False, 
-        facet_col="Pays", facet_col_wrap=4, #height=1000, title="df_depenses" #'group','overlay', 'relative' facet_col="variable", facet_col_wrap=2 .update_traces( marker={"color": "red"}, name='Pays', showlegend=True #name="red",
-        color_discrete_map={ '(?)':'lightgrey','Protection<br>sociale':'gold', 'Santé':'#a1ddd2',
-                            'Services<br>publics':'lightgrey','Education':'lightgrey', 'Affaires<br>économiques':'lightgrey',
-                            'Ordre<br>public<br>et<br>sécurité':'lightgrey','Défense':'lightgrey','Habitat':'darkblue',
-                            'Sports,<br>culture<br>et<br>religions':'lightgrey',"Protection<br>de<br>l'environnement":'green' }
-    )
-    st.plotly_chart(fig0) #, use_container_width=True)
+        #__________________________
+        st.header('Dépenses dans le temps', divider='gray')
+        st.caption("Le budget est requestionné tous les an")
+        import plotly.express as px
+        #.query("Année==2003 |Année==2013 | Année==2023")
+        st.info("Le budget pour l'Habitat en Italie est passé de 1% en 2020 à 8% en 2023. Le budget Français de l'Habitat est assez conséquent avec 2 % depuis 20 ans.")
 
-    st.info('Chaque réaffectation du budget prends du temps pour en mesurer les impacts.')
+        fig0 = px.line(filtered_df_depenses,x="Année", y="value", color="variable", #barmode = 'group', cumulative = False, 
+            facet_col="Pays", facet_col_wrap=4, #height=1000, title="df_depenses" #'group','overlay', 'relative' facet_col="variable", facet_col_wrap=2 .update_traces( marker={"color": "red"}, name='Pays', showlegend=True #name="red",
+            color_discrete_map={ '(?)':'lightgrey','Protection<br>sociale':'gold', 'Santé':'#a1ddd2',
+                                'Services<br>publics':'lightgrey','Education':'lightgrey', 'Affaires<br>économiques':'lightgrey',
+                                'Ordre<br>public<br>et<br>sécurité':'lightgrey','Défense':'lightgrey','Habitat':'darkblue',
+                                'Sports,<br>culture<br>et<br>religions':'lightgrey',"Protection<br>de<br>l'environnement":'green' }
+        )
+        st.plotly_chart(fig0) #, use_container_width=True)
+
+        st.info('Chaque réaffectation du budget prends du temps pour en mesurer les impacts. En Italie un choix budgetaire fort a été porté sur l'Habitat.')
 
 
     #with tab2:
