@@ -355,7 +355,6 @@ with tab1:
         col0, col2, col3, col4 = st.columns([1,1,1,1])
         #col1.write('**Accessibilité financière du logement**')
         col2.write('**Surcharge financière lié au coût du logement**')
-        st.info('This is a purely informational message', icon="ℹ️")
         col3.write('**Incapacité à maintenir le logement à bonne température**')
         col4.write('**Taux de surpeuplement**')
         # Three columns with different widths
@@ -367,6 +366,9 @@ with tab1:
         col3.write("*Pourcentage de ménages déclarant qu'ils n'ont pas les moyens de chauffer adéquatement leur logement.*")
         col4.write("*Pourcentage de ménages vivant dans des logements surpeuplés.*")
 
+        col2.st.image('./img/7_v2.svg')
+        col3.st.image('./img/7_v2.svg')
+        col4.st.image('./img/7_v2.svg')
             
         # Using 'with' notation:
         with col0:
