@@ -232,7 +232,7 @@ with tab0:
             st.text(num_protection_sociale)
         
         st.write("Si tu étais curieux de connaître le regroupement des autres dépenses passes la souris dessus ou clic pour agrandir la cellule.")
-        #st.info("Chaque réaffectation du budget prends du temps pour en mesurer les impacts. En Italie un choix budgetaire fort a été porté sur l'Habitat.")
+        #st.info("Chaque réaffectation du budget prends du temps pour en mesurer les impacts.")
 
         st.info("⇦ Dans le bandeau de gauche tu as la possibilité d'ajouter des années ou des pays. Ensuite pour faciliter la lecture du graphique les années et les catégories sont triées de la gauche vers la droite, de la plus grande valeur à la plus petite.")
 
