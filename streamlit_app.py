@@ -272,7 +272,7 @@ with tab1:
         st.caption("Question Habitat :smile: :house_with_garden: ")
         st.text("Les états européens de l'OCDE consacrent entre 1 et 8 % pour l'Habitat. Et toi, que représente tes dépenses pour le logement ?")
         
-        col0, col1 = st.columns([1,3])
+        col0, col1 = st.columns([2,2])
         with col0:
             num_habitat_perso = st.slider("Que représente ton budget dédié à l'Habitat ?", value=2, min_value=0, max_value=100, step=1, format="%d%%")
             st.markdown("<br>", unsafe_allow_html=True)
@@ -415,42 +415,43 @@ with tab2:
     with tabr3:
         st.header('Température du logement', divider='gray')
         st.caption("Incapacité à maintenir le logement à bonne température ")
-        st.text("Cet indicateur reflète une conséquence de la précarité énergétique, sans toutefois expliquer les causes possibles de l'incapacité à maintenir une température adéquate, qu'elles soient économiques (prix de l'énergie, manque de ressources, …), liées aux caractéristiques du bâtiment (efficacité énergétique, manque d'équipements) ou autres. Les caractéristiques sociales et culturelles des ménages influencent fortement la déclaration d'incapacité à chauffer adéquatement son logement, et le niveau de température adéquate peut varier d'un pays à l'autre. Enfin, les personnes en situation de précarité énergétique peuvent nier se considérer comme étant dans une situation inconfortable et, par conséquent, ne pas le déclarer (également appelé « biais de déni de réalité »).")
-        #st.snow()
-
-        ## Sorting the DataFrame using the key argument
-        df_wellness = df_wellness.sort_values(by=['Valeur_Mesurée', 'Pays','Année'], ascending=[False,False,False]).query("Domaine =='Logement' & Année==2022 & Mesure== 'Incapacité à maintenir le logement à bonne température'") #.head(1) #| Année==2021")
-        df_wellness = df_wellness.sort_values(by=['Mesure'], key=lambda x: x.map(custom_order))
-
-        figf = px.scatter(
-            df_wellness,
-            x="Pays", #size= 'Valeur_Mesurée', #size_max=25,
-            y="Valeur_Mesurée", color="Pays",height=500,width=800,
-            hover_name="Pays", size_max=5,
-            hover_data=["Domaine", "Valeur_Mesurée","Mesure", "Unité"]
-        )
-        figf.update_layout(yaxis_title="Pourcentage en 2022") #xaxis_title=xaxis_title,
-        figf.update_traces(marker_color="rgba(0,0,0,0)")
-        figf.update_traces(line=dict(width=0.5)) #color="Black",
-
-
-        #maxDim = df2[["Mesure", "Valeur_Mesurée"]].max().idxmax()
-        #maxi = df2[maxDim].max()
-        for i, row in df_wellness.iterrows():
-            country = row['Cde_Pays'] #.replace(" ", "-")
-            figf.add_layout_image(
-                dict(source=Image.open(f"flag/{country}.png"),
-                    xref="x", yref="y",
-                    xanchor="center", yanchor="middle",
-                    x=row["Pays"], y=row["Valeur_Mesurée"],
-                    sizex=1,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
-                    sizey=1,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
-                    sizing="contain", opacity=0.8, layer="above"
-                )
+        
+        col0, col1 = st.columns([1,4])
+        with col0:
+            st.text("Cet indicateur reflète une conséquence de la précarité énergétique, sans toutefois expliquer les causes possibles de l'incapacité à maintenir une température adéquate, qu'elles soient économiques (prix de l'énergie, manque de ressources, …), liées aux caractéristiques du bâtiment (efficacité énergétique, manque d'équipements) ou autres. Les caractéristiques sociales et culturelles des ménages influencent fortement la déclaration d'incapacité à chauffer adéquatement son logement, et le niveau de température adéquate peut varier d'un pays à l'autre. Enfin, les personnes en situation de précarité énergétique peuvent nier se considérer comme étant dans une situation inconfortable et, par conséquent, ne pas le déclarer (également appelé « biais de déni de réalité »).")
+            ## Sorting the DataFrame using the key argument
+            df_wellness = df_wellness.sort_values(by=['Valeur_Mesurée', 'Pays','Année'], ascending=[False,False,False]).query("Domaine =='Logement' & Année==2022 & Mesure== 'Incapacité à maintenir le logement à bonne température'") #.head(1) #| Année==2021")
+            df_wellness = df_wellness.sort_values(by=['Mesure'], key=lambda x: x.map(custom_order))
+        with col1:
+            figf = px.scatter(
+                df_wellness,
+                x="Pays", #size= 'Valeur_Mesurée', #size_max=25,
+                y="Valeur_Mesurée", color="Pays",height=500,width=800,
+                hover_name="Pays", size_max=5,
+                hover_data=["Domaine", "Valeur_Mesurée","Mesure", "Unité"]
             )
+            figf.update_layout(yaxis_title="Pourcentage en 2022") #xaxis_title=xaxis_title,
+            figf.update_traces(marker_color="rgba(0,0,0,0)")
+            figf.update_traces(line=dict(width=0.5)) #color="Black",
 
-        #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
-        figf.update_traces(mode="markers+lines")
-        st.plotly_chart(figf)
+
+            #maxDim = df2[["Mesure", "Valeur_Mesurée"]].max().idxmax()
+            #maxi = df2[maxDim].max()
+            for i, row in df_wellness.iterrows():
+                country = row['Cde_Pays'] #.replace(" ", "-")
+                figf.add_layout_image(
+                    dict(source=Image.open(f"flag/{country}.png"),
+                        xref="x", yref="y",
+                        xanchor="center", yanchor="middle",
+                        x=row["Pays"], y=row["Valeur_Mesurée"],
+                        sizex=1,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
+                        sizey=1,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
+                        sizing="contain", opacity=0.8, layer="above"
+                    )
+                )
+
+            #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
+            figf.update_traces(mode="markers+lines")
+            st.plotly_chart(figf)
 
         st.info("Alors que le critère considère uniquement le maintien du logement au chaud, le top 4 comprend 3 pays au climat méditerranéen chaud : Grèce, Portugal, Espagne.")
