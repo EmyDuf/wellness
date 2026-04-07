@@ -292,7 +292,7 @@ with tab1:
     #__________________________
     with tabr2:
         st.header("Bien-être dans l'habitat", divider='gray')
-        st.caption("Comment mesurer le bien être au sein du logment ? :smile: :house_with_garden: ")
+        st.caption("Comment mesurer le bien-être au sein du logment ? :smile: :house_with_garden: ")
 
         st.write("La classification [COFOG](https://en.wikipedia.org/wiki/Classification_of_the_Functions_of_Government) regarde le pourcentage dédié à l'Habitat comme critère de bien-être. Au dessus de 40 %, la surcharge financière lié au coût du logement est décrite comme impactant le bien être. Cela concerne 11 % des Français en 2022.")
 
@@ -412,7 +412,8 @@ with tab2:
     with tabq3:
         st.header('Mesurer le Bien-être à grande échelle', divider='gray')
         st.caption("Question Habitat :smile: :house_with_garden: ")
-        st.text("Question")
+        st.radio("Avez-vous souffert du froid cet hiver ?", ['Oui','Non'])
+        
 
     with tabr3:
         st.header('Température du logement', divider='gray')
