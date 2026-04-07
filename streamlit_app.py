@@ -197,9 +197,10 @@ with tab0:
         st.write("Pas facile comme exercice. Un rappel des choix que tu as fait :")
         coli, col0, col1, col2, col3 = st.columns([1,1,1,1,1])
         with coli:
-            st.markdown("Autre : " , num_autre)
-            st.write("Autre :")
-            st.text(num_autre)
+            st.write("Autre : ", num_autre, "%")
+            #st.markdown("Autre : " , num_autre)
+            #st.write("Autre :")
+            #st.text(num_autre)
         with col0:
             st.write("Habitat :")
             st.text(num_habitat)
