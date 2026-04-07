@@ -312,7 +312,7 @@ with tab1:
                         'Surcharge financière liée au coût du logement': 1, 'Incapacité à maintenir le logement à bonne température': 2, 
                         'Ménages vivant dans des logements surpeuplés': 3, 'Ménages disposant d’un accès internet' : 4}
         ## Sorting the DataFrame using the key argument
-        df2 = filtered_df_wellness.sort_values(by=['Pays','Année'], ascending=[False,False]).query("Domaine =='Logement' & Année==2022") #.head(1) #| Année==2021")
+        df2 = filtered_df_wellness.sort_values(by=['Pays','Année'], ascending=[False,False]).query("Domaine =='Logement' & Mesure !='Accessibilité financière du logement' & Année==2022") #.head(1) #| Année==2021")
         df2 = df2.sort_values(by=['Mesure'], key=lambda x: x.map(custom_order))
 
         col0, col1 = st.columns([1,4])
