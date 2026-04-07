@@ -231,7 +231,7 @@ with tab0:
         st.caption("Le budget est requestionné tous les an")
         import plotly.express as px
         #.query("Année==2003 |Année==2013 | Année==2023")
-        st.info("Le budget pour l'Habitat en Italie est passé de 1% en 2020 à 8% en 2023. Le budget Français de l'Habitat est assez conséquent avec 2 % depuis 20 ans.")
+        st.info("Le budget pour l'Habitat en Italie est passé de 1% en 2020 à 8% en 2023. Le budget Français de l'Habitat est assez constant avec environ 2 % depuis 20 ans.")
 
         fig0 = px.line(filtered_df_depenses,x="Année", y="value", color="variable", #barmode = 'group', cumulative = False, 
             facet_col="Pays", facet_col_wrap=4, #height=1000, title="df_depenses" #'group','overlay', 'relative' facet_col="variable", facet_col_wrap=2 .update_traces( marker={"color": "red"}, name='Pays', showlegend=True #name="red",
@@ -354,16 +354,16 @@ with tab1:
         #st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement")
         
         col0, col1, col2, col3, col4 = st.columns([1,1,1,1,1])
-        col1.write('**Accessibilité financière du logement**')
-        col2.write('**Surcharge financière lié au coût du logement**')
-        col3.write('**Incapacité à maintenir le logement à bonne température**')
-        col4.write('**Taux de surpeuplement**')
+        col1.write('**Accessibilité financière du logement (%)**')
+        col2.write('**Surcharge financière lié au coût du logement (%)**')
+        col3.write('**Incapacité à maintenir le logement à bonne température (%)**')
+        col4.write('**Taux de surpeuplement (%)**')
         # Three columns with different widths
         #col1, col2, col3, col4 = st.columns([4,1,1])
         # col1 is wider
 
-        col1.write("*Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement.*")
-        col2.write("*Pourcentage de la population dans la tranche inférieure de 40 % de la répartition des revenus consacrant plus de 40 % de leur revenu disponible aux frais de logement.*")
+        col1.write("*Pourcentage du revenu disponible brut restant, après déduction des loyers et de l'entretien du logement.*")
+        col2.write("*Pourcentage de la population consacrant plus de 40 % de leur revenu aux frais de logement.*")
         col3.write("*Pourcentage de ménages déclarant qu'ils n'ont pas les moyens de chauffer adéquatement leur logement.*")
         col4.write("*Pourcentage de ménages vivant dans des logements surpeuplés.*")
 
@@ -378,10 +378,10 @@ with tab1:
             st.write("La surcharge financière lié au coût du logement est mesurée par le pourcentage de la population situés dans les 40 % inférieurs de la répartition des revenus qui consacrent plus de 40 % de leur revenu disponible aux coûts de logement, ce dernier seuil de 40 % étant basé sur la méthodologie utilisée par Eurostat pour les pays membres de l'UE. Les coûts de logement incluent les loyers réels ainsi que les coûts hypothécaires, englobant le remboursement du capital et les intérêts ; contrairement à la mesure de l’accessibilité financière du logement tirée des comptes nationaux, aucun loyer imputé pour les logements occupés par leur propriétaire n’est inclus. ")
             #Aucune donnée sur les remboursements du principal hypothécaire n’est disponible pour le Danemark. Pour le Chili, le Mexique, la Corée et les États-Unis, le revenu brut est utilisé plutôt que le revenu disponible. Les données sont tirées de la base de données de l'OCDE sur le logement abordable, qui provient des données d'enquêtes auprès des ménages.
         with col3:
-            st.write("L’incapacité à maintenir une température adéquate dans le logement (précarité énergétique) fait référence au pourcentage de ménages déclarant ne pas avoir les moyens de maintenir leur logement suffisamment au chaud. Cet indicateur reflète une conséquence de la précarité énergétique, sans toutefois expliquer les causes possibles de l'incapacité à maintenir une température adéquate, qu'elles soient économiques (prix de l'énergie, manque de ressources, …), liées aux caractéristiques du bâtiment (efficacité énergétique, manque d'équipements) ou autres. Les caractéristiques sociales et culturelles des ménages influencent fortement la déclaration d'incapacité à chauffer adéquatement son logement, et le niveau de température adéquate peut varier d'un pays à l'autre. Enfin, les personnes en situation de précarité énergétique peuvent nier se considérer comme étant dans une situation inconfortable et, par conséquent, ne pas le déclarer (également appelé « biais de déni de réalité »). La question est posée à la personne de référence du ménage et les informations sont disponibles uniquement au niveau du ménage.")
+            st.write("L’incapacité à maintenir une température adéquate dans le logement (précarité énergétique) si le ménage déclare ne pas avoir les moyens de maintenir le logement suffisamment au chaud.")
             #Les données proviennent d'estimations fournies par les offices statistiques nationaux par le biais des Statistiques de l'Union européenne sur les revenus et les conditions de vie, une enquête représentative au niveau national avec de grands échantillons (d'environ 4 000 individus dans les plus petits États membres à environ 16 000 dans le plus grand) couvrant tous les membres des ménages privés âgés de 16 ans ou plus et disponible pour les pays de l'UE, ainsi que pour la Norvège et la Suisse.
         with col4:
-            st.write("Le taux de surpeuplement (le pourcentage de ménages vivant dans des conditions de surpeuplement) adopte la définition convenue par l'UE, qui prend en compte différents besoins en espace de vie selon l'âge et la composition par sexe du ménage. Un ménage est considéré comme vivant dans des conditions de surpeuplement si moins d'une pièce est disponible pour : chaque couple du ménage ; chaque personne seule âgée de 18 ans ou plus ; chaque couple de personnes du même sexe entre 12 et 17 ans ; chaque personne seule entre 12 et 17 ans ne relevant pas de la catégorie précédente ; et chaque paire d'enfants de moins de 12 ans. ")
+            st.write("Le taux de surpeuplement considère différents besoins en espace de vie selon l'âge et la composition du ménage. Surpeuplement si moins d'une pièce est disponible pour : chaque couple du ménage ; chaque personne seule âgée de 18 ans ou plus ; ... ")
             #Les données proviennent de la base de données de l'OCDE sur le logement abordable, qui utilise les données d'enquêtes auprès des ménages. Au Chili, au Mexique, au Danemark, aux Pays-Bas et aux États-Unis, aucune donnée n’est disponible concernant les locataires subventionnés.
         
         #placeholder = st.empty() # Create a placeholder
@@ -418,6 +418,7 @@ with tab2:
     with tabr3:
         st.header('Température du logement', divider='gray')
         st.caption("Incapacité à maintenir le logement à bonne température ")
+        st.text("Cet indicateur reflète une conséquence de la précarité énergétique, sans toutefois expliquer les causes possibles de l'incapacité à maintenir une température adéquate, qu'elles soient économiques (prix de l'énergie, manque de ressources, …), liées aux caractéristiques du bâtiment (efficacité énergétique, manque d'équipements) ou autres. Les caractéristiques sociales et culturelles des ménages influencent fortement la déclaration d'incapacité à chauffer adéquatement son logement, et le niveau de température adéquate peut varier d'un pays à l'autre. Enfin, les personnes en situation de précarité énergétique peuvent nier se considérer comme étant dans une situation inconfortable et, par conséquent, ne pas le déclarer (également appelé « biais de déni de réalité »).")
         #st.snow()
 
         ## Sorting the DataFrame using the key argument
