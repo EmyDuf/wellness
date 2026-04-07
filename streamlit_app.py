@@ -295,7 +295,7 @@ with tab1:
     #__________________________
     with tabr2:
         st.header("Bien-être dans l'habitat", divider='gray')
-        st.caption("Comment mesurer le bien être au sein du logment ? Graphique en 2022 :smile: :house_with_garden: ")
+        st.caption("Comment mesurer le bien être au sein du logment ? :smile: :house_with_garden: ")
 
         st.write("La classification [COFOG](https://en.wikipedia.org/wiki/Classification_of_the_Functions_of_Government) regarde le pourcentage dédié à l'Habitat comme critère de bien-être. Au dessus de 40 %, la surcharge financière lié au coût du logement est décrite comme impactant le bien être. Cela conserne 11 % des Français en 2022.")
 
@@ -348,16 +348,18 @@ with tab1:
                 )
 
             #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
+            #Graphique en 2022
+            fig1.update_layout(yaxis_title="Pourcentage en 2022") #xaxis_title=xaxis_title,
             fig1.update_traces(mode="markers+lines")
             st.plotly_chart(fig1)
 
         #st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement")
         
         col0, col1, col2, col3, col4 = st.columns([1,1,1,1,1])
-        col1.write('**Accessibilité financière du logement (%)**')
-        col2.write('**Surcharge financière lié au coût du logement (%)**')
-        col3.write('**Incapacité à maintenir le logement à bonne température (%)**')
-        col4.write('**Taux de surpeuplement (%)**')
+        col1.write('**Accessibilité financière du logement**')
+        col2.write('**Surcharge financière lié au coût du logement**')
+        col3.write('**Incapacité à maintenir le logement à bonne température**')
+        col4.write('**Taux de surpeuplement**')
         # Three columns with different widths
         #col1, col2, col3, col4 = st.columns([4,1,1])
         # col1 is wider
@@ -432,7 +434,7 @@ with tab2:
             hover_name="Pays", size_max=5,
             hover_data=["Domaine", "Valeur_Mesurée","Mesure", "Unité"]
         )
-
+        figf.update_layout(yaxis_title="Pourcentage en 2023") #xaxis_title=xaxis_title,
         figf.update_traces(marker_color="rgba(0,0,0,0)")
         figf.update_traces(line=dict(width=0.5)) #color="Black",
 
