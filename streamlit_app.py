@@ -228,8 +228,8 @@ with tab0:
                                     'Services<br>publics':'lightgrey','Education':'lightgrey', 'Affaires<br>économiques':'lightgrey',
                                     'Ordre<br>public<br>et<br>sécurité':'lightgrey','Défense':'lightgrey','Habitat':'darkblue',
                                     'Sports,<br>culture<br>et<br>religions':'lightgrey',"Protection<br>de<br>l'environnement":'green' },
-                                hover_name='variable', 
-                                hover_data=["value", "Unité","Pays"]
+                                #hover_name='variable', 
+                                #hover_data=["value", "Unité","Pays"]
         )
         fig0.update_layout(xaxis_title="", yaxis_title="Pourcentage du budget")
         st.plotly_chart(fig0) #, use_container_width=True)
