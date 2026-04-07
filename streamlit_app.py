@@ -186,7 +186,8 @@ with tab2:
         # Display a chat input widget.
         st.chat_input("Say something") 
 
-    st.radio('Selectionner', options=[1,2,3,4,5])
+    #st.radio('Selectionner', options=[1,2,3,4,5])
+    st.slider('Slide me', min_value=0, max_value=10)
 
 
 with tab3:
@@ -211,7 +212,9 @@ with tab3:
 
     col0, col1 = st.columns([1,4])
     with col0:
-        st.write("\n_ \n_")
+        st.write("Comment " \
+        "mesurer le bien être " \
+        "au sein du logment ?")
         st.image('./img/6.svg')  
     with col1:
         fig1 = px.line(
