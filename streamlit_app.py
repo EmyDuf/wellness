@@ -469,3 +469,68 @@ with tab2:
         st.markdown("Cet indicateur reflète une conséquence de la **précarité énergétique**, sans toutefois expliquer les causes possibles de l'incapacité à maintenir une température adéquate, qu'elles soient **économiques** *(prix de l'énergie, manque de ressources...)*, liées aux **caractéristiques du bâtiment** (efficacité énergétique, manque d'équipements) ou autres. Les caractéristiques **sociales** et **culturelles** des ménages influencent fortement la déclaration d'incapacité à chauffer adéquatement son logement, et le **niveau de température adéquate peut varier d'un pays à l'autre**.")
 
         st.info("Attention, le **biais de déni de réalité** implique que des personnes en situation réelle de précarité énergétique peuvent nier cette situation d'inconfort.")
+
+        import plotly.express as px
+        from PIL import Image
+        # Sample data for scatter_mapbox
+        df_wellness_map = df_wellness.query("Domaine =='Logement' & Année==2022 & Mesure== 'Incapacité à maintenir le logement à bonne température'")
+
+
+        # Create scatter_mapbox figure
+        fig_map = px.scatter_mapbox(df_wellness_map , 
+                                    lat="LAT", lon="LON",  color="Valeur_Mesurée", #size="Valeur_Mesurée", 
+                                    title = "Pourcentage des personnes en incapacité à maintenir le logement à bonne température par pays de l'OCDE", 
+                                    color_continuous_scale=["blue", "red"], 
+                                    hover_data=['ISO3'], 
+                                    opacity = 0.2, size_max=30, 
+                                    zoom=3,
+                                    #mapbox_style="carto-positron",
+                                    width=1000, height=700)
+
+
+        # Use OpenStreetMap tiles (no token required)
+        fig_map.update_layout(mapbox_style="carto-positron") #open-street-map")
+
+        # Add an image overlay (relative to the entire figure, not georeferenced)
+        for i, row in df_wellness_map.iterrows():
+            country = row['Cde_Pays'] #.replace(" ", "-")
+            fig_map.add_layout_image(
+                dict(source=Image.open(f"flag/{country}.png"),
+                xref="paper",  # relative to the figure's coordinate system
+                yref="paper", #xref="x2 domain", yref="y2 domain", #xref= "/^x([2-9]|[1-9][0-9]+)?( domain)?$/", yref= "/^y([2-9]|[1-9][0-9]+)?( domain)?$/", #xref="x1", yref="y2", #xref="x", yref="y", #xref="paper", yref="paper"
+                xanchor="center", yanchor="middle",
+                x=row["LON"], y=row["LAT"],
+                sizex=0.3,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
+                sizey=0.3,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
+                sizing="contain", opacity=1, layer="above", #range_x=[-20, 40], range_y=[30, 70]
+                            )
+                        )
+
+        layers = []
+        for i, row in df_wellness_map.iterrows():
+            country = row['Cde_Pays']
+            
+            lon_min = row["LON"] - row["Valeur_Mesurée"]/10 -0.32 # /2 car trop grand ; +0.2 pour contrer les erreurs de projections
+            lon_max = row["LON"] + row["Valeur_Mesurée"]/10 +0.32 # +0.2 pour contrer les erreurs de projections
+            lat_min = row["LAT"] - row["Valeur_Mesurée"]/10 
+            lat_max = row["LAT"] + row["Valeur_Mesurée"]/10 
+
+            layers.append({
+                #"size_max":10,
+                "opacity":0.8, 
+                #"layer":"above",
+                "sourcetype": "image",
+                "source": Image.open(f"flag/{country}.png"),
+                "coordinates": [
+                    [lon_min, lat_max],  # Haut gauche
+                    [lon_max, lat_max],  # Haut droit
+                    [lon_max, lat_min],  # Bas droit
+                    [lon_min, lat_min]   # Bas gauche
+                ]
+            })
+
+        fig_map.update_layout(mapbox_layers=layers)                  
+            
+        # Show the figure
+        #fig_map.show()
+        st.plotly_chart(fig_map)
