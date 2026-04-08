@@ -39,7 +39,7 @@ import geopandas as gpd
 
 # Set the title and favicon that appear in the Browser's tab bar.
 st.set_page_config(layout="wide",    page_title='Wellness : fr',
-    page_icon=':smile:',initial_sidebar_state='collapsed',) # This is an emoji shortcode. Could be a URL too.)
+    page_icon=':smile:',initial_sidebar_state='expanded',) # This is an emoji shortcode. Could be a URL too.)
 #@m = folium.Map(location=[43.59966,1.44043,], zoom_start=11, tiles='OpenStreetMap')
 #folium_static(m)
 
@@ -87,7 +87,7 @@ df_depenses = get_data_depenses()
 #    min_value=max_value_debit,
 #    value=[min_value_debit, max_value_debit],max_value=max_value_debit)
 
-st.sidebar.title('Le bien-être')
+st.sidebar.title('Financer le bien-être')
 st.sidebar.image('./img/7_v2.svg')
 
 # Filter année
