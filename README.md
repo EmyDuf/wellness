@@ -73,3 +73,10 @@ Chacun de ces répertoires contient les fichiers suivants
  - pib
  - dette
  - impots
+
+# Production
+Streamlit réalisé par Emy
+Canva : Illustrations gratuites réalisées par imagineHarry de sketchify (Doodle Brushstroke Project Evaluation Editorial ; Doodle Brushstroke Budget)
+Canva : Illustration gratuite réalisée par StarPetals Studio de Flestelar (Simple House Shape Gingerbread Christmas)
+Canva : Illustration gratuite réalisée par Muslim Preneur Art de Muslim Preneur Art (Diverse group of happy people standing.)
+Canva : Illustration gratuite réalisée par RGBGraphics de pixabay (9785545)
