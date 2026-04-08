@@ -481,7 +481,7 @@ with tab2:
                                     lat="LAT", lon="LON",  color="Valeur_Mesurée", #size="Valeur_Mesurée", 
                                     #title = "Pourcentage des personnes<br>en incapacité à maintenir<br>le logement à bonne température<br>par pays de l'OCDE", 
                                     color_continuous_scale=["blue", "red"], 
-                                    labels={"Valeur_Mesurée": "Pourcentage des personnes en incapacité à maintenir le logement à bonne température par pays de l'OCDE",},
+                                    labels={"Valeur_Mesurée": "Pourcentage des personnes<br>en incapacité à maintenir<br>le logement à bonne température<br>par pays de l'OCDE",},
                                     hover_name="Pays", hover_data=['Valeur_Mesurée'], 
                                     opacity = 0.2, size_max=30, 
                                     zoom=3,
