@@ -438,7 +438,7 @@ with tab2:
                 x="Pays", #size= 'Valeur_Mesurée', #size_max=25,
                 y="Valeur_Mesurée", #color="Pays",
                 #height=500,width=800,
-                size_max=5,
+                size_max=5, range_y=[0, 20]
                 #hover_name="Pays",
                 #hover_data=["Valeur_Mesurée"]
             )
