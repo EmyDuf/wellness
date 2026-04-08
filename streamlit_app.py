@@ -62,7 +62,7 @@ def get_data_wellness():
     # Instead of a CSV on disk, you could read from an HTTP endpoint here too.
     DATA_FILENAME = Path(__file__).parent/'data/bien_etre.csv'
     df = pd.read_csv(DATA_FILENAME, sep=';', encoding='utf-8')
-    df['Valeur_Mesurée'] = df['Valeur_Mesurée'].str.replace(",", ".", regex=False)  # replace decimal comma with dot
+    #df['Valeur_Mesurée'] = df['Valeur_Mesurée'].str.replace(",", ".", regex=False)  # replace decimal comma with dot
     df['Valeur_Mesurée'] = df['Valeur_Mesurée'].astype(float)
 
     return df
