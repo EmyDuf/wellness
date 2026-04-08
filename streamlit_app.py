@@ -442,7 +442,7 @@ with tab2:
                 #hover_name="Pays",
                 #hover_data=["Valeur_Mesurée"]
             )
-            figf.update_layout(yaxis_title="Pourcentage en 2022") #xaxis_title=xaxis_title,
+            figf.update_layout(yaxis_title="Pourcentage en 2022<br> des personnes en incapacité à maintenir<br>  le logement à bonne température") #xaxis_title=xaxis_title,
             figf.update_traces(marker_color="rgba(0,0,0,0)")
             figf.update_traces(line=dict(width=0.5)) #color="Black",
 
