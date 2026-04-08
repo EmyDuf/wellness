@@ -426,7 +426,7 @@ with tab2:
         
         col0, col1 = st.columns([1,5])
         with col0:
-            #st.markdown("<br> <br> <br>", unsafe_allow_html=True)
+            st.markdown("<br> <br> <br>", unsafe_allow_html=True)
             st.info("Alors que le critère considère uniquement le maintien du logement au chaud, le top 4 comprend 3 pays au climat méditerranéen chaud : Grèce, Portugal, Espagne.")
 
             ## Sorting the DataFrame using the key argument
