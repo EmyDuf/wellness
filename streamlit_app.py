@@ -435,7 +435,7 @@ with tab2:
         with col1:
             figf = px.scatter(
                 df_wellness,
-                x="Pays", #size= 'Valeur_Mesurée', #size_max=25,
+                x="Pays", size= 'Valeur_Mesurée', #size_max=25,
                 y="Valeur_Mesurée", #color="Pays",
                 #height=500,width=800,
                 size_max=5, range_y=[0, 20]
@@ -481,7 +481,8 @@ with tab2:
                                     lat="LAT", lon="LON",  color="Valeur_Mesurée", #size="Valeur_Mesurée", 
                                     title = "Pourcentage des personnes en incapacité à maintenir le logement à bonne température par pays de l'OCDE", 
                                     color_continuous_scale=["blue", "red"], 
-                                    hover_data=['ISO3'], 
+                                    labels={"Valeur_Mesurée": "Pourcentage des personnes en incapacité à maintenir le logement à bonne température par pays de l'OCDE",},
+                                    hover_name="Pays", hover_data=['Valeur_Mesurée'], 
                                     opacity = 0.2, size_max=30, 
                                     zoom=3,
                                     #mapbox_style="carto-positron",
