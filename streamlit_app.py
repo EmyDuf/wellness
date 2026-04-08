@@ -479,7 +479,7 @@ with tab2:
         # Create scatter_mapbox figure
         fig_map = px.scatter_mapbox(df_wellness_map , 
                                     lat="LAT", lon="LON",  color="Valeur_Mesurée", #size="Valeur_Mesurée", 
-                                    title = "Pourcentage des personnes en incapacité à maintenir le logement à bonne température par pays de l'OCDE", 
+                                    #title = "Pourcentage des personnes<br>en incapacité à maintenir<br>le logement à bonne température<br>par pays de l'OCDE", 
                                     color_continuous_scale=["blue", "red"], 
                                     labels={"Valeur_Mesurée": "Pourcentage des personnes en incapacité à maintenir le logement à bonne température par pays de l'OCDE",},
                                     hover_name="Pays", hover_data=['Valeur_Mesurée'], 
@@ -503,7 +503,7 @@ with tab2:
                 x=row["LON"], y=row["LAT"],
                 sizex=0.3,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
                 sizey=0.3,#maxi * 0.2, #row["Valeur_Mesurée"]/5, #np.sqrt(row["pop"] / df["pop"].max()) * maxi * 0.2 + maxi * 0.05,
-                sizing="contain", opacity=1, layer="above", #range_x=[-20, 40], range_y=[30, 70]
+                sizing="contain", opacity=0.9, layer="above", #range_x=[-20, 40], range_y=[30, 70]
                             )
                         )
 
@@ -530,7 +530,7 @@ with tab2:
                 ]
             })
 
-        fig_map.update_layout(mapbox_layers=layers)                  
+        fig_map.update_layout(mapbox_layers=layers, hovermode="x unified")                  
             
         # Show the figure
         #fig_map.show()
