@@ -39,7 +39,8 @@ import geopandas as gpd
 
 # Set the title and favicon that appear in the Browser's tab bar.
 st.set_page_config(layout="wide",    page_title='Wellness : fr',
-    page_icon=':smile:',initial_sidebar_state='expanded',) # This is an emoji shortcode. Could be a URL too.)
+    page_icon=':smile:',initial_sidebar_state ="auto") # , sidebar-default-width = 400 This is an emoji shortcode. Could be a URL too.)
+
 #@m = folium.Map(location=[43.59966,1.44043,], zoom_start=11, tiles='OpenStreetMap')
 #folium_static(m)
 
