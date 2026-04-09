@@ -148,7 +148,8 @@ with tab0:
                             color_discrete_map={'Autre':'lightgrey', 'Protection sociale':'gold', 'Santé':'#a1ddd2',
                                                 'Habitat':'darkblue',
                                                 "Protection de l'environnement":'green' },
-                            hover_data = ['Dépense', 'Pourcentage']
+                            #hover_data = ['Dépense', 'Pourcentage']
+                            hover_name="Pourcentage", hover_data=dict(Pourcentage = False, Dépense=False)
                             #color_continuous_scale="Viridis",
                             )
 
@@ -194,9 +195,11 @@ with tab0:
                             color_discrete_map={'(?)':'lightgrey', 'Protection<br>sociale':'gold', 'Santé':'#a1ddd2',
                                                 'Services<br>publics':'','Education':'', 'Affaires<br>économiques':'',
                                                 'Ordre<br>public<br>et<br>sécurité':'','Défense':'','Habitat':'darkblue',
-                                                'Sports,<br>culture<br>et<br>religions':'',"Protection<br>de<br>l'environnement":'green' }
+                                                'Sports,<br>culture<br>et<br>religions':'',"Protection<br>de<br>l'environnement":'green' },
+                            hover_name="variable", hover_data=dict(value= False, variable = False, Pays=False)
                             #color_continuous_scale="Viridis",
                             )
+            fig3.update_traces(hovertemplate="<b>%{label}</b><br>Value: %{value}<extra></extra>")
 
             fig3.data[0].textinfo = 'label+text+percent parent' #+value' #value'+percent entry
             #fig3.update_traces(root_color="lightgrey")
@@ -224,13 +227,20 @@ with tab0:
 
         fig0 = px.line(filtered_df_depenses,x="Année", y="value", color="variable", #barmode = 'group', cumulative = False, 
                                 facet_col="Pays", facet_col_wrap=4, #height=1000, title="df_depenses" #'group','overlay', 'relative' facet_col="variable", facet_col_wrap=2 .update_traces( marker={"color": "red"}, name='Pays', showlegend=True #name="red",
-                                color_discrete_map={ '(?)':'lightgrey','Protection<br>sociale':'gold', 'Santé':'#a1ddd2',
+                                
+                              color_discrete_map={ '(?)':'lightgrey','Protection<br>sociale':'gold', 'Santé':'#a1ddd2',
                                     'Services<br>publics':'lightgrey','Education':'lightgrey', 'Affaires<br>économiques':'lightgrey',
                                     'Ordre<br>public<br>et<br>sécurité':'lightgrey','Défense':'lightgrey','Habitat':'darkblue',
                                     'Sports,<br>culture<br>et<br>religions':'lightgrey',"Protection<br>de<br>l'environnement":'green' },
+                                    hover_name="variable", hover_data=dict(variable = False, value=True),
                                 #hover_name='variable', 
                                 #hover_data=["value", "Unité","Pays"]
         )
+#'Services<br>publics': "Services<br>publics", 'Education': "Education" ,
+# 'Affaires<br>économiques':"Affaires<br>économiques", 'Ordre<br>public<br>et<br>sécurité' : 'Ordre public<br>et sécurité',
+# 'Défense' : 'Défense', 'Habitat' : 'Habitat', 'Sports,<br>culture<br>et<br>religions' :'Sports, culture<br>et religions',
+# "Protection<br>de<br>l'environnement" : "Protection de<br>l'environnement",])
+
         fig0.update_layout(xaxis_title="", yaxis_title="Pourcentage du budget")
         st.plotly_chart(fig0) #, use_container_width=True)
         st.info("Le budget pour l'Habitat en Italie est passé de 1% en 2020 à 8% en 2023. Le budget Français de l'Habitat est assez constant avec environ 2 % depuis 20 ans.")
@@ -272,11 +282,11 @@ with tab1:
     with tabq2:
         st.header("Bien-être dans l'habitat", divider='gray')
         st.caption("Question Habitat :smile: :house_with_garden: ")
-        st.text("Les états européens de l'OCDE consacrent entre 1 et 8 % pour l'Habitat. Et toi, que représente tes dépenses pour le logement ?")
+        st.text("Les États européens de l'OCDE consacrent entre 1 et 8 % pour l'Habitat. ")
         
         col0, col1 = st.columns([2,2])
         with col0:
-            num_habitat_perso = st.slider("Que représente ton budget dédié à l'Habitat ?", value=2, min_value=0, max_value=100, step=1, format="%d%%")
+            num_habitat_perso = st.slider("Et toi, quel pourcentage de ton budget consacres-tu à l'Habitat ?", value=2, min_value=0, max_value=100, step=1, format="%d%%")
             st.markdown("<br>", unsafe_allow_html=True)
             st.write("N'oublies pas toutes les dépenses associées : **loyers** y compris les services divers, l'approvisionnement en **eau**, **l'électricité**, le gaz et autres combustibles, ainsi que les dépenses liées au mobilier, équipements ménagers, biens et services pour l’entretien courant de la maison, dépenses de réparation du logement, remboursements...")
 
@@ -284,9 +294,13 @@ with tab1:
             num_autre_perso = 100 - num_habitat_perso
             list_x = [num_habitat_perso, num_autre_perso]
             names = ['Habitat', "Autre"]
-            fig_p_perso = px.pie(values=list_x, names=names,color =names , color_discrete_map={'Autre':'lightgrey', 
-                                            'Habitat':'darkblue', })
-            fig_p_perso.update_traces(textposition='inside', textinfo='label+percent') #value
+            df_h = pd.DataFrame({'Pourcentage': list_x,'names': names,})
+            fig_p_perso = px.pie(df_h, values="Pourcentage", color="names", #names="names"
+                                 color_discrete_map={'Autre':'lightgrey', 'Habitat':'darkblue', },)
+                                 #hover_name="names", hover_data=dict(list_x=True))
+                                 #hovertemplate = "%{names} <br>Pourcentage: %{list_x}")
+                                 #hover_name="names",hover_data={"Pourcentage":True, "color": False})
+            fig_p_perso.update_traces(textposition='inside', textinfo='percent') #, textinfo='label+percent') #value
             st.plotly_chart(fig_p_perso)
     
     #__________________________
@@ -320,12 +334,15 @@ with tab1:
             fig1 = px.line(
                 df2,
                 x="Mesure", #size= 'Valeur_Mesurée', #size_max=25,
-                y="Valeur_Mesurée", color="Pays",height=500,width=800,
-                hover_name="Pays", #size_max=20,
-                hover_data=["Valeur_Mesurée", "Unité"] #"Domaine", "Mesure",
+                y="Valeur_Mesurée", color="Pays",
+                height=500,width=800,
+                #hover_name="Pays", hover_data=dict(Pays = False, Valeur_Mesurée=True)
+                #size_max=20,
+                #hover_data=["Valeur_Mesurée", "Unité"] #"Domaine", "Mesure",
             )
 
             fig1.update_traces(marker_color="rgba(0,0,0,0)")
+            
             fig1.update_traces(line=dict(width=0.5)) #color="Black",
 
 
@@ -347,7 +364,10 @@ with tab1:
             #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
             #Graphique en 2022
             fig1.update_layout(xaxis_title="",yaxis_title="Pourcentage en 2022") #xaxis_title=xaxis_title,
-            fig1.update_traces(mode="markers+lines")
+            fig1.update_traces(line_color='#D9D9D9',mode="markers+lines", hovertemplate=None) #, mode="markers+lines", hovertemplate=None)
+            fig1.update_layout(hovermode='x') #remontre le champ x
+            fig1.update_xaxes(visible=False)
+            fig1.update_layout(showlegend=False)
             st.plotly_chart(fig1)
 
         #st.button("Unité de mesure : Pourcentage du revenu disponible brut ajusté restant du ménage, après déduction des loyers et de l'entretien du logement")
@@ -355,9 +375,9 @@ with tab1:
         col0, col2, col3, col4 = st.columns([1,1,1,1])
             
         #col1.write('**Accessibilité financière du logement**')
-        #col2.write('**Surcharge financière lié au coût du logement**')
-        #col3.write('**Incapacité à maintenir le logement à bonne température**')
-        #col4.write('**Taux de surpeuplement**')
+        col2.write('**Surcharge financière lié au coût du logement**')
+        col3.write('**Incapacité à maintenir le logement à bonne température**')
+        col4.write('**Taux de surpeuplement**')
 
         # Three columns with different widths
         #col1, col2, col3, col4 = st.columns([4,1,1])
@@ -424,32 +444,30 @@ with tab2:
         st.header('Mesurer le Bien-être : Température du logement', divider='gray')
         st.caption("Incapacité à maintenir le logement à bonne température ")
         
-        col0, col1 = st.columns([1,5])
-        with col0:
-            st.markdown("<br> <br> <br>", unsafe_allow_html=True)
-            st.info("Alors que le critère considère uniquement le maintien du logement au chaud, le top 4 comprend 3 pays au climat méditerranéen chaud : Grèce, Portugal, Espagne.")
 
-            ## Sorting the DataFrame using the key argument
-            df_wellness = df_wellness.sort_values(by=['Valeur_Mesurée', 'Pays','Année'], ascending=[False,False,False]).query("Domaine =='Logement' & Année==2022 & Mesure== 'Incapacité à maintenir le logement à bonne température'") #.head(1) #| Année==2021")
-            df_wellness = df_wellness.sort_values(by=['Mesure'], key=lambda x: x.map(custom_order))
-        with col1:
-            figf = px.scatter(
+
+        ## Sorting the DataFrame using the key argument
+        df_wellness = df_wellness.sort_values(by=['Valeur_Mesurée', 'Pays','Année'], ascending=[False,False,False]).query("Domaine =='Logement' & Année==2022 & Mesure== 'Incapacité à maintenir le logement à bonne température'") #.head(1) #| Année==2021")
+        df_wellness = df_wellness.sort_values(by=['Mesure'], key=lambda x: x.map(custom_order))
+
+        figf = px.scatter(
                 df_wellness,
                 x="Pays", size= 'Valeur_Mesurée', #size_max=25,
                 y="Valeur_Mesurée", #color="Pays",
                 #height=500,width=800,
-                size_max=5, range_y=[0, 20]
+                size_max=5, range_y=[0, 20],
+                hover_name="Pays", hover_data=dict(Pays = False, Valeur_Mesurée=True)
                 #hover_name="Pays",
                 #hover_data=["Valeur_Mesurée"]
             )
-            figf.update_layout(yaxis_title="Pourcentage en 2022<br> des personnes en incapacité à maintenir<br>  le logement à bonne température") #xaxis_title=xaxis_title,
-            figf.update_traces(marker_color="rgba(0,0,0,0)")
-            figf.update_traces(line=dict(width=0.5)) #color="Black",
+        figf.update_layout(yaxis_title="Pourcentage en 2022<br> des personnes en incapacité à maintenir<br>  le logement à bonne température") #xaxis_title=xaxis_title,
+        figf.update_traces(marker_color="rgba(0,0,0,0)")
+        figf.update_traces(line=dict(width=0.5)) #color="Black",
 
 
-            #maxDim = df2[["Mesure", "Valeur_Mesurée"]].max().idxmax()
-            #maxi = df2[maxDim].max()
-            for i, row in df_wellness.iterrows():
+        #maxDim = df2[["Mesure", "Valeur_Mesurée"]].max().idxmax()
+        #maxi = df2[maxDim].max()
+        for i, row in df_wellness.iterrows():
                 country = row['Cde_Pays'] #.replace(" ", "-")
                 figf.add_layout_image(
                     dict(source=Image.open(f"flag/{country}.png"),
@@ -462,9 +480,12 @@ with tab2:
                     )
                 )
 
-            #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
-            figf.update_traces(mode="markers+lines")
-            st.plotly_chart(figf)
+        #fig.update_layout(plot_bgcolor="#ffffff") #height=600, width=1000, yaxis_range=[-5e3, 55e3], 
+        figf.update_traces(mode="markers+lines")
+        st.plotly_chart(figf)
+        
+        st.info("Alors que le critère considère uniquement le maintien du logement au chaud, le top 4 comprend 3 pays au climat méditerranéen chaud : Grèce, Portugal, Espagne.")
+
 
         st.markdown("Cet indicateur reflète une conséquence de la **précarité énergétique**, sans toutefois expliquer les causes possibles de l'incapacité à maintenir une température adéquate, qu'elles soient **économiques** *(prix de l'énergie, manque de ressources...)*, liées aux **caractéristiques du bâtiment** (efficacité énergétique, manque d'équipements) ou autres. Les caractéristiques **sociales** et **culturelles** des ménages influencent fortement la déclaration d'incapacité à chauffer adéquatement son logement, et le **niveau de température adéquate peut varier d'un pays à l'autre**.")
 
@@ -478,15 +499,15 @@ with tab2:
 
         # Create scatter_mapbox figure
         fig_map = px.scatter_mapbox(df_wellness_map , 
-                                    lat="LAT", lon="LON",  color="Valeur_Mesurée", #size="Valeur_Mesurée", 
-                                    #title = "Pourcentage des personnes<br>en incapacité à maintenir<br>le logement à bonne température<br>par pays de l'OCDE", 
-                                    color_continuous_scale=["blue", "red"], 
-                                    labels={"Valeur_Mesurée": "Pourcentage des personnes<br>en incapacité à maintenir<br>le logement à bonne température<br>par pays de l'OCDE",},
-                                    hover_name="Pays", hover_data=['Valeur_Mesurée'], 
+                                    lat="LAT", lon="LON",  #color="Valeur_Mesurée", #size="Valeur_Mesurée", 
+                                    title = "Pourcentage des personnes en incapacité à maintenir<br>le logement à bonne température par pays de l'OCDE", 
+                                    #color_continuous_scale=["blue", "red"], 
+                                    #labels={"Valeur_Mesurée": "Pourcentage des personnes<br>en incapacité à maintenir<br>le logement à bonne température<br>par pays de l'OCDE",},
+                                    hover_name="Pays", hover_data=dict(Valeur_Mesurée=True, LAT=False, LON=False),  #not lon=False
                                     opacity = 0.2, size_max=30, 
                                     zoom=3,
                                     #mapbox_style="carto-positron",
-                                    width=1000, height=700)
+                                    width=1000, height=700,)
 
 
         # Use OpenStreetMap tiles (no token required)
@@ -529,8 +550,8 @@ with tab2:
                     [lon_min, lat_min]   # Bas gauche
                 ]
             })
-
-        fig_map.update_layout(mapbox_layers=layers, hovermode="x unified")                  
+         
+        fig_map.update_layout(mapbox_layers=layers) #, hovermode="x unified")                  
             
         # Show the figure
         #fig_map.show()
